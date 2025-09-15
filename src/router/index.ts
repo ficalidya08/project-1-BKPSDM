@@ -5,11 +5,11 @@ import Direktori from '@/views/Direktori.vue'
 
 
 
+
 const router = createRouter({
   history: createWebHistory(),
 
   routes: [
-  
     {
     path: '/Katalog',
     name: 'Katalog',

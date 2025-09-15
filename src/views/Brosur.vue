@@ -21,17 +21,30 @@
       </svg>
       <span class="text-base font-medium">Kembali ke Home</span>
     </router-link>
+<div>
+      <!-- Container logo -->
+<div class="flex items-center justify-center gap-2">
+  <!-- Logo BKPSDM -->
+  <img
+    src="@/assets/images/logo/bkpsdm.png"
+    alt="Logo BKPSDM"
+    class="h-[90px] w-auto"
+  />
 
-    <!-- Logo -->
-    <img
-      src="@/assets/images/logo/logo.png"
-      alt="Logo BKPSDM"
-      class="mx-auto h-[90px] w-auto mb-6"
-    />
+  <!-- Logo utama -->
+  <img
+    src="@/assets/images/logo/logo.png"
+    alt="Logo Utama"
+    class="h-[180px] w-auto"
+  />
+</div>
+
+</div>
+
 
     <!-- Judul -->
-    <div class="text-center text-black mb-10">
-      <h1 class="text-4xl font-katalog font-bold tracking-wide">Brosur</h1>
+    <div class="text-center text-black mb-8">
+      <h1 class="text-6xl font-katalog font-bold tracking-wide">Brosur</h1>
       <p class="text-2xl font-serif">
         Pusat Informasi Pelatihan dan Pengembangan
       </p>
@@ -118,28 +131,42 @@
       <div
         class="flex justify-between items-center px-4 py-3 border-t text-sm text-gray-600"
       >
-        <span>Showing 1 to 10 of 47 entries</span>
+        <span>
+          Showing 
+          {{ (currentPage - 1) * itemsPerPage + 1 }} 
+          to 
+          {{ Math.min(currentPage * itemsPerPage, pelatihan.length) }} 
+          of {{ pelatihan.length }} entries
+        </span>
         <div class="flex space-x-2">
-          <button class="px-3 py-1 border rounded-lg hover:bg-gray-100">
+          <button 
+            class="px-3 py-1 border rounded-lg hover:bg-gray-100"
+            :disabled="currentPage === 1"
+            @click="currentPage--"
+          >
             &lt;
           </button>
+
           <button
-            class="px-3 py-1 border rounded-lg bg-blue-600 text-white"
+            v-for="page in totalPages"
+            :key="page"
+            class="px-3 py-1 border rounded-lg"
+            :class="page === currentPage ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'"
+            @click="currentPage = page"
           >
-            1
+            {{ page }}
           </button>
-          <button class="px-3 py-1 border rounded-lg hover:bg-gray-100">
-            2
-          </button>
-          <button class="px-3 py-1 border rounded-lg hover:bg-gray-100">
-            3
-          </button>
-          <button class="px-3 py-1 border rounded-lg hover:bg-gray-100">
+
+          <button 
+            class="px-3 py-1 border rounded-lg hover:bg-gray-100"
+            :disabled="currentPage === totalPages"
+            @click="currentPage++"
+          >
             &gt;
           </button>
         </div>
       </div>
-    </div>
+
     <!-- Modal Detail -->
 <div
   v-if="showModal"
@@ -226,6 +253,7 @@
   </div>
 </div>
 </div>
+</div>
 </Template>
 
 <script setup>
@@ -233,15 +261,13 @@ import { ref, computed } from "vue";
 
 const showModal = ref(false);
 const selected = ref({});
-const currentPage = ref(1);
-const itemsPerPage = 10; // jumlah data per halaman
 
 function openDetail(item) {
   selected.value = item;
   showModal.value = true;
 }
 
-// Data brosur
+// Data
 const pelatihan = [
   {
     nama: "Pelatihan Kepemimpinan Strategis 2024",
@@ -313,32 +339,34 @@ const pelatihan = [
     tanggal: "18 Februari 2025",
     file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
   },
+  {
+    nama: "Pelatihan Kepemimpinan Strategis 2024",
+    penyelenggara: "LAN (Lembaga Administrasi Negara)",
+    nomor: "002/LAN/2024",
+    tanggal: "15 Januari 2025",
+    file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
+  },
+  {
+    nama: "Pelatihan Kepemimpinan Strategis 2024",
+    penyelenggara: "LAN (Lembaga Administrasi Negara)",
+    nomor: "002/LAN/2024",
+    tanggal: "15 Januari 2025",
+    file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
+  },
 ];
 
-// data sesuai halaman aktif
-const paginatedData = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  return pelatihan.slice(start, start + itemsPerPage);
+// --- Pagination ---
+const currentPage = ref(1);
+const itemsPerPage = ref(10);
+
+const totalPages = computed(() => {
+  return Math.ceil(pelatihan.length / itemsPerPage.value);
 });
 
-// navigasi halaman
-function goToPage(page) {
-  if (page >= 1 && page <= totalPages.value) {
-    currentPage.value = page;
-  }
-}
-
-function prevPage() {
-  if (currentPage.value > 1) {
-    currentPage.value--;
-  }
-}
-
-function nextPage() {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++;
-  }
-}
+const paginatedData = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  return pelatihan.slice(start, start + itemsPerPage.value);
+});
 
 </script>
 

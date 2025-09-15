@@ -21,16 +21,26 @@
       <span class="text-base font-medium">Kembali ke Home</span>
     </router-link>
 
-    <!-- Logo -->
-    <img
-      src="@/assets/images/logo/logo.png"
-      alt="Logo BKPSDM"
-      class="mx-auto h-[90px] w-auto mb-6"
-    />
+    <!-- Container logo -->
+<div class="flex items-center justify-center gap-2">
+  <!-- Logo BKPSDM -->
+  <img
+    src="@/assets/images/logo/bkpsdm.png"
+    alt="Logo BKPSDM"
+    class="h-[90px] w-auto"
+  />
+
+  <!-- Logo utama -->
+  <img
+    src="@/assets/images/logo/logo.png"
+    alt="Logo Utama"
+    class="h-[180px] w-auto"
+  />
+</div>
 
     <!-- Judul -->
-    <div class="text-center text-white mb-10">
-      <h1 class="text-4xl font-katalog font-bold tracking-wide">KATALOG</h1>
+    <div class="text-center text-white mb-8">
+      <h1 class="text-6xl font-katalog font-bold tracking-wide">KATALOG</h1>
       <p class="text-2xl font-serif">
         Direktori Lengkap Program Pelatihan dan Pengembangan SDM
       </p>
