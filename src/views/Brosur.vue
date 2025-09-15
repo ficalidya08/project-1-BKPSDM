@@ -28,14 +28,14 @@
   <img
     src="@/assets/images/logo/bkpsdm.png"
     alt="Logo BKPSDM"
-    class="h-[90px] w-auto"
+    class="h-[70px] w-auto"
   />
 
   <!-- Logo utama -->
   <img
     src="@/assets/images/logo/logo.png"
     alt="Logo Utama"
-    class="h-[180px] w-auto"
+    class="h-[140px] w-auto"
   />
 </div>
 
@@ -44,7 +44,7 @@
 
     <!-- Judul -->
     <div class="text-center text-black mb-8">
-      <h1 class="text-6xl font-katalog font-bold tracking-wide">Brosur</h1>
+      <h1 class="text-4xl font-katalog font-bold tracking-wide mb-1">Brosur</h1>
       <p class="text-2xl font-serif">
         Pusat Informasi Pelatihan dan Pengembangan
       </p>

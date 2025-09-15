@@ -28,20 +28,20 @@
   <img
     src="@/assets/images/logo/bkpsdm.png"
     alt="Logo BKPSDM"
-    class="h-[90px] w-auto"
+    class="h-[70px] w-auto"
   />
 
   <!-- Logo utama -->
   <img
     src="@/assets/images/logo/logo.png"
     alt="Logo Utama"
-    class="h-[180px] w-auto"
+    class="h-[140px] w-auto"
   />
 </div>
 
     <!-- Judul -->
-    <div class="text-center text-white mb-8">
-      <h1 class="text-6xl font-katalog font-bold tracking-wide">DIREKTORI</h1>
+    <div class="text-center text-black mb-8">
+      <h1 class="text-4xl font-katalog font-bold tracking-wide mb-1">DIREKTORI</h1>
       <p class="text-2xl font-serif">
         Direktori Lengkap Program Pelatihan dan Pengembangan SDM
       </p>
