@@ -66,6 +66,8 @@
             id="year"
             class="border border-gray-300 rounded-lg px-2 py-1 text-sm"
           >
+            <option>2017</option>
+            <option>2018</option>
             <option>2019</option>
             <option>2020</option>
             <option>2021</option>
@@ -172,7 +174,10 @@
   v-if="showModal"
   class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
 >
-  <div class="bg-white w-full max-w-5xl rounded-2xl shadow-xl p-8 relative">
+  <div
+    class="bg-white w-full max-w-5xl rounded-2xl shadow-xl p-8 relative 
+           max-h-[90vh] overflow-y-auto"
+  >
     <!-- Tombol Close -->
     <button
       @click="showModal = false"
@@ -231,7 +236,7 @@
           <img src="@/assets/icons/Buku.svg" alt="File" class="h-6 w-6" />
           <h3 class="font-semibold text-orange-800">File Brosur</h3>
         </div>
-        <p class="text-sm mb-3">{{ selected.file.split('/').pop() }}</p>
+        <p class="text-sm mb-3 break-words whitespace-normal">{{ selected.file.split('/').pop() }}</p>
         <div class="flex gap-3">
           <a
             :href="selected.file"
