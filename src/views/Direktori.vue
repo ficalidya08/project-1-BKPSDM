@@ -53,16 +53,18 @@
     <!-- Filter Atas -->
     <div class="flex flex-wrap justify-between items-center p-4 border-b border-gray-200 gap-4">
       <!-- Dropdown Tahun -->
-      <div class="flex items-center space-x-2">
-        <label for="year" class="text-sm font-semibold text-gray-700">Tahun:</label>
-        <select
-          id="year"
-          class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:ring-blue-500 focus:border-blue-500"
-          v-model="selectedYear"
-        >
-          <option v-for="tahun in years" :key="tahun" :value="tahun">{{ tahun }}</option>
-        </select>
-      </div>
+<div class="flex items-center space-x-2">
+  <label for="year" class="text-sm font-semibold text-gray-700">Tahun:</label>
+  <select
+    id="year"
+    class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:ring-blue-500 focus:border-blue-500"
+    v-model="selectedYear"
+  >
+    <option value="">Semua</option>
+    <option v-for="tahun in years" :key="tahun" :value="tahun">{{ tahun }}</option>
+  </select>
+</div>
+
 
       <!-- Search -->
       <input
@@ -116,10 +118,13 @@
     <!-- Footer Pagination -->
     <div class="flex justify-between items-center px-4 py-3 border-t text-sm text-gray-600">
       <span>
-        {{ (currentPage - 1) * itemsPerPage + 1 }} –
-        {{ Math.min(currentPage * itemsPerPage, filteredData.length) }}
-        of {{ filteredData.length }} entries
-      </span>
+      Showing 
+      {{ (currentPage - 1) * itemsPerPage + 1 }} 
+      to 
+      {{ Math.min(currentPage * itemsPerPage, filteredData.length) }} 
+      of {{ filteredData.length }} entries
+    </span>
+
       <div class="flex space-x-2">
         <button
           class="px-3 py-1 border rounded-lg hover:bg-gray-100 disabled:opacity-50"
@@ -155,7 +160,8 @@ import { ref, computed } from "vue";
 
 // Tahun filter
 const years = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
-const selectedYear = ref(2025);
+const selectedYear = ref(""); // default kosong = semua
+
 
 // Search
 const searchQuery = ref("");
@@ -168,7 +174,7 @@ const pelatihan = [
     biaya: "Rp 125.000.000",
     sertifikat: "/files/laporan_kepemimpinan_strategis_2024.pdf",
     laporan: "/files/laporan_ks_2024.pdf",
-    tahun: 2025,
+    tahun: 2024,
   },
   {
     judul: "Laporan Training Digital Transformation Aparatur Sipil Negara",
@@ -176,101 +182,102 @@ const pelatihan = [
     biaya: "Rp 75.000.000",
     sertifikat: "/files/laporan_digital_2024.pdf",
     laporan: "/files/laporan_dt_2024.pdf",
-    tahun: 2025,
+    tahun: 2024,
   },
   {
     judul: "Laporan Sertifikasi ISO 9001:2015 Quality Management System",
     hasil: "Revisi",
     biaya: "Rp 85.000.000",
-    sertifikat: "/files/laporan_digital_2024.pdf",
-    laporan: "/files/laporan_dt_2024.pdf",
+    sertifikat: "/files/laporan_digital_2025.pdf",
+    laporan: "/files/laporan_dt_2025.pdf",
     tahun: 2025,
   },
   {
     judul: "Laporan Pelatihan Manajemen Keuangan Publik dan Anggaran Negara",
     hasil: "Lulus",
     biaya: "Rp 100.000.000",
-    sertifikat: "/files/laporan_digital_2024.pdf",
-    laporan: "/files/laporan_dt_2024.pdf",
+    sertifikat: "/files/laporan_digital_2025.pdf",
+    laporan: "/files/laporan_dt_2025.pdf",
     tahun: 2025,
   },
   {
     judul: "Laporan Workshop Data Analytics dan Business Intelligenc",
     hasil: "Revisi",
     biaya: "Rp 115.000.000",
-    sertifikat: "/files/laporan_digital_2024.pdf",
-    laporan: "/files/laporan_dt_2024.pdf",
+    sertifikat: "/files/laporan_digital_2025.pdf",
+    laporan: "/files/laporan_dt_2025.pdf",
     tahun: 2025,
   },
   {
     judul: "Laporan Pelatihan Project Management Professional (PMP) Certification",
     hasil: "Lulus",
     biaya: "Rp 95.000.000",
-    sertifikat: "/files/laporan_digital_2024.pdf",
-    laporan: "/files/laporan_dt_2024.pdf",
+    sertifikat: "/files/laporan_digital_2025.pdf",
+    laporan: "/files/laporan_dt_2025.pdf",
     tahun: 2025,
   },
   {
     judul: "Laporan Sertifikasi COBIT 2019 IT Governance Framework",
     hasil: "Revisi",
     biaya: "Rp 165.000.000",
-    sertifikat: "/files/laporan_digital_2024.pdf",
-    laporan: "/files/laporan_dt_2024.pdf",
+    sertifikat: "/files/laporan_digital_2025.pdf",
+    laporan: "/files/laporan_dt_2025.pdf",
     tahun: 2025,
   },
   {
     judul: "Laporan Pelatihan Audit Internal dan Risk Management",
     hasil: "Lulus",
     biaya: "Rp 100.000.000",
-    sertifikat: "/files/laporan_digital_2024.pdf",
-    laporan: "/files/laporan_dt_2024.pdf",
+    sertifikat: "/files/laporan_digital_2025.pdf",
+    laporan: "/files/laporan_dt_2025.pdf",
     tahun: 2025,
   },
   {
     judul: "Laporan Training Cybersecurity Awareness dan Digital Security",
     hasil: "Revisi",
     biaya: "Rp 140.000.000",
-    sertifikat: "/files/laporan_digital_2024.pdf",
-    laporan: "/files/laporan_dt_2024.pdf",
+    sertifikat: "/files/laporan_digital_2025.pdf",
+    laporan: "/files/laporan_dt_2025.pdf",
     tahun: 2025,
   },
   {
     judul: "Laporan Pelatihan Sistem Manajemen Mutu ISO 9001",
     hasil: "Revisi",
     biaya: "Rp 55.000.000",
-    sertifikat: "/files/laporan_digital_2024.pdf",
-    laporan: "/files/laporan_dt_2024.pdf",
+    sertifikat: "/files/laporan_digital_2025.pdf",
+    laporan: "/files/laporan_dt_2025.pdf",
     tahun: 2025,
   },
   {
     judul: "Laporan Workshop Machine Learning dan Artificial Intelligence",
     hasil: "Lulus",
     biaya: "Rp 85.000.000",
-    sertifikat: "/files/laporan_digital_2024.pdf",
-    laporan: "/files/laporan_dt_2024.pdf",
-    tahun: 2025,
-  },
-  {
-    judul: "Laporan Pelatihan Manajemen Risiko Keuangan dan Operasional",
-    hasil: "Revisi",
-    biaya: "Rp 130.000.000",
-    sertifikat: "/files/laporan_digital_2024.pdf",
-    laporan: "/files/laporan_dt_2024.pdf",
+    sertifikat: "/files/laporan_digital_2025.pdf",
+    laporan: "/files/laporan_dt_2025.pdf",
     tahun: 2025,
   },
   
 ];
 
 // Pagination
+
+
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
 
 const filteredData = computed(() => {
-  return pelatihan.filter(
-    (item) =>
-      item.tahun === selectedYear.value &&
-      item.judul.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
+  return pelatihan.filter((item) => {
+    const matchYear =
+      selectedYear.value === "" || item.tahun === parseInt(selectedYear.value);
+
+    const matchSearch =
+      searchQuery.value === "" ||
+      Object.values(item).some((val) =>
+        String(val).toLowerCase().includes(searchQuery.value.toLowerCase())
+      );
+
+    return matchYear && matchSearch;
+  });
 });
 
 const totalPages = computed(() => {

@@ -51,34 +51,35 @@
       class="bg-white shadow-xl rounded-xl w-full max-w-6xl overflow-hidden font-inter"
     >
       <!-- Filter Atas -->
-      <div
-        class="flex flex-wrap justify-between items-center p-4 border-b border-gray-200 gap-4"
+<div
+  class="flex flex-wrap justify-between items-center p-4 border-b border-gray-200 gap-4"
+>
+  <div class="flex items-center space-x-2">
+    <label for="year" class="text-sm font-semibold text-gray-700"
+      >Tahun:</label
+    >
+    <select
+      id="year"
+      v-model="selectedYear"
+      class="border border-gray-300 rounded-lg px-2 py-1 text-sm"
+    >
+      <option value="all">Semua</option>
+      <option 
+        v-for="year in years" 
+        :key="year" 
+        :value="year"
       >
-        <div class="flex items-center space-x-2">
-          <label for="year" class="text-sm font-semibold text-gray-700"
-            >Tahun:</label
-          >
-          <select
-            id="year"
-            class="border border-gray-300 rounded-lg px-2 py-1 text-sm"
-          >
-            <option>2017</option>
-            <option>2018</option>
-            <option>2019</option>
-            <option>2020</option>
-            <option>2021</option>
-            <option>2022</option>
-            <option>2023</option>
-            <option>2024</option>
-            <option selected>2025</option>
-          </select>
-        </div>
-        <input
-          type="text"
-          placeholder="Search..."
-          class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-60"
-        />
-      </div>
+        {{ year }}
+      </option>
+    </select>
+  </div>
+  <input
+    type="text"
+    v-model="searchQuery"
+    placeholder="Search..."
+    class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-60"
+  />
+</div>
 
       <!-- Tabel -->
       <div class="overflow-x-auto">
@@ -128,12 +129,13 @@
         class="flex justify-between items-center px-4 py-3 border-t text-sm text-gray-600"
       >
         <span>
-          Showing 
-          {{ (currentPage - 1) * itemsPerPage + 1 }} 
-          to 
-          {{ Math.min(currentPage * itemsPerPage, pelatihan.length) }} 
-          of {{ pelatihan.length }} entries
+        Showing 
+        {{ (currentPage - 1) * itemsPerPage + 1 }} 
+        to 
+        {{ Math.min(currentPage * itemsPerPage, filteredData.length) }} 
+        of {{ filteredData.length }} entries
         </span>
+
         <div class="flex space-x-2">
           <button 
             class="px-3 py-1 border rounded-lg hover:bg-gray-100"
@@ -252,11 +254,11 @@ import { ref, computed } from "vue";
 
 const showModal = ref(false);
 const selected = ref({});
+const searchQuery = ref("");
+const selectedYear = ref("all");
 
-function openDetail(item) {
-  selected.value = item;
-  showModal.value = true;
-}
+
+const years = Array.from({ length: 2025 - 2017 + 1 }, (_, i) => 2017 + i);
 
 // Data
 const pelatihan = [
@@ -264,11 +266,12 @@ const pelatihan = [
     nama: "Pelatihan Kepemimpinan",
     jenis: "Manajemen dan Leadership",
     metode: "Tatap Muka",
-    pelaksanaan: "15–20 Januari 2025",
+    pelaksanaan: "15–20 Januari 2024",
     penyelenggara: "PT. Mandiri Training Center",
     tujuan: "Pelatihan untuk pengembangan kemampuan kepemimpinan dan manajemen tim",
     estimasi: "Rp 5.000.000",
     keterangan: "Kuota tersedia 15 peserta",
+    tahun: 2024,
   },
   {
     nama: "Pelatihan Manajemen Proyek",
@@ -279,6 +282,7 @@ const pelatihan = [
     tujuan: "Pelatihan manajemen proyek dengan metodologi PMBOK dan Agile",
     estimasi: "Rp 3.500.000",
     keterangan: "Sertifikat PMP tersedia",
+    tahun: 2025,
   },
   {
     nama: "Pelatihan Digital Marketing",
@@ -289,6 +293,7 @@ const pelatihan = [
     tujuan: "Pelatihan strategi pemasaran digital, SEO, dan social media marketing",
     estimasi: "Rp 4.200.000",
     keterangan: "Menunggu konfirmasi venue",
+    tahun: 2025,
   },
   {
     nama: "Pelatihan Data Analytics dengan Python",
@@ -299,6 +304,7 @@ const pelatihan = [
     tujuan: "Pelatihan analisis data menggunakan Python, Pandas, dan visualisasi data",
     estimasi: "Rp 6.500.000",
     keterangan: "Include laptop dan software",
+    tahun: 2025,
   },
   {
     nama: "Pelatihan Akuntansi Keuangan Dasar",
@@ -309,6 +315,7 @@ const pelatihan = [
     tujuan: "Pelatihan dasar-dasar akuntansi dan laporan keuangan untuk non-akuntan",
     estimasi: "Rp 2.800.000",
     keterangan: "Materi dalam Bahasa Indonesia",
+    tahun: 2025
   },
   {
     nama: "Pelatihan Customer Service Excellence",
@@ -319,6 +326,7 @@ const pelatihan = [
     tujuan: "Pelatihan pelayanan pelanggan terbaik dan penanganan komplain",
     estimasi: "Rp 3.200.000",
     keterangan: "Include role playing session",
+    tahun: 2025,
   },
   {
     nama: "Pelatihan K3 (Keselamatan dan Kesehatan Kerja)",
@@ -329,6 +337,7 @@ const pelatihan = [
     tujuan: "Pelatihan standar K3 dan implementasi sistem manajemen keselamatan",
     estimasi: "Rp 4.800.000	",
     keterangan: "Sertifikat K3 Umum",
+    tahun: 2025,
   },
   {
     nama: "	Pelatihan Public Speaking & Presentation",
@@ -339,6 +348,7 @@ const pelatihan = [
     tujuan: "Pelatihan kemampuan berbicara di depan umum dan teknik presentasi efektif",
     estimasi: "Rp 4.000.000",
     keterangan: "Max 20 peserta",
+    tahun: 2025,
   },
   {
     nama: "Pelatihan Supply Chain Management",
@@ -349,6 +359,7 @@ const pelatihan = [
     tujuan: "Pelatihan manajemen rantai pasok dan optimasi distribusi",
     estimasi: "Rp 3.800.000",
     keterangan: "Ditunda hingga pemberitahuan lebih lanjut",
+    tahun: 2025,
   },
   {
     nama: "Pelatihan Digital Transformation Strategy",
@@ -359,6 +370,18 @@ const pelatihan = [
     tujuan: "Pelatihan strategi transformasi digital untuk organisasi modern",
     estimasi: "Rp 7.200.000",
     keterangan: "MMenunggu approval budget",
+    tahun: 2025,
+  },
+  {
+    nama: "Pelatihan Digital Transformation Strategy",
+    jenis: "Teknologi Informasi",
+    metode: "Hybrid",
+    pelaksanaan: "08-12 Apr 2025",
+    penyelenggara: "Digital Transformation Consultancy",
+    tujuan: "Pelatihan strategi transformasi digital untuk organisasi modern",
+    estimasi: "Rp 7.200.000",
+    keterangan: "Menunggu approval budget",
+    tahun: 2025,
   },
   {
     nama: "Pelatihan Digital Transformation Strategy",
@@ -369,33 +392,49 @@ const pelatihan = [
     tujuan: "Pelatihan strategi transformasi digital untuk organisasi modern",
     estimasi: "Rp 7.200.000",
     keterangan: "MMenunggu approval budget",
-  },
-  {
-    nama: "Pelatihan Digital Transformation Strategy",
-    jenis: "Teknologi Informasi",
-    metode: "Hybrid",
-    pelaksanaan: "08-12 Apr 2025",
-    penyelenggara: "Digital Transformation Consultancy",
-    tujuan: "Pelatihan strategi transformasi digital untuk organisasi modern",
-    estimasi: "Rp 7.200.000",
-    keterangan: "MMenunggu approval budget",
+    tahun: 2025,
   },
   
 ];
+
+const filteredData = computed(() => {
+  return pelatihan.filter((item) => {
+    // Ambil tahun dari pelaksanaan (regex 4 digit terakhir)
+    const yearFromPelaksanaan = item.pelaksanaan.match(/\d{4}/);
+    const tahunItem = yearFromPelaksanaan ? parseInt(yearFromPelaksanaan[0]) : null;
+
+    const matchYear =
+      selectedYear.value === "all" || tahunItem === selectedYear.value;
+
+    const matchSearch =
+      searchQuery.value === "" ||
+      Object.values(item).some((val) =>
+        String(val).toLowerCase().includes(searchQuery.value.toLowerCase())
+      );
+
+    return matchYear && matchSearch;
+  });
+});
+
+
 
 // --- Pagination ---
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
 
 const totalPages = computed(() => {
-  return Math.ceil(pelatihan.length / itemsPerPage.value);
+  return Math.ceil(filteredData.value.length / itemsPerPage.value);
 });
 
 const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage.value;
-  return pelatihan.slice(start, start + itemsPerPage.value);
+  return filteredData.value.slice(start, start + itemsPerPage.value);
 });
 
+function openDetail(item) {
+  selected.value = item;
+  showModal.value = true;
+}
 </script>
 
 <style>

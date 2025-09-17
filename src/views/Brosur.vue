@@ -54,35 +54,38 @@
     <div
       class="bg-white shadow-xl rounded-xl w-full max-w-6xl overflow-hidden"
     >
-      <!-- Filter Atas -->
-      <div
-        class="flex flex-wrap justify-between items-center p-4 border-b border-gray-200 gap-4"
-      >
-        <div class="flex items-center space-x-2">
-          <label for="year" class="text-sm font-semibold text-gray-700"
-            >Tahun:</label
-          >
-          <select
-            id="year"
-            class="border border-gray-300 rounded-lg px-2 py-1 text-sm"
-          >
-            <option>2017</option>
-            <option>2018</option>
-            <option>2019</option>
-            <option>2020</option>
-            <option>2021</option>
-            <option>2022</option>
-            <option>2023</option>
-            <option>2024</option>
-            <option selected>2025</option>
-          </select>
-        </div>
-        <input
-          type="text"
-          placeholder="Search..."
-          class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-60"
-        />
-      </div>
+     <!-- Filter Atas -->
+<div
+  class="flex flex-wrap justify-between items-center p-4 border-b border-gray-200 gap-4"
+>
+  <div class="flex items-center space-x-2">
+    <label for="year" class="text-sm font-semibold text-gray-700"
+      >Tahun:</label
+    >
+    <select
+      id="year"
+      v-model="selectedYear"
+      class="border border-gray-300 rounded-lg px-2 py-1 text-sm"
+    >
+      <option value="">Semua</option>
+      <option>2017</option>
+      <option>2018</option>
+      <option>2019</option>
+      <option>2020</option>
+      <option>2021</option>
+      <option>2022</option>
+      <option>2023</option>
+      <option>2024</option>
+      <option>2025</option>
+    </select>
+  </div>
+  <input
+    type="text"
+    v-model="searchQuery"
+    placeholder="Search..."
+    class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-60"
+  />
+</div>
 
       <!-- Tabel -->
 <div class="overflow-x-auto">
@@ -134,12 +137,13 @@
         class="flex justify-between items-center px-4 py-3 border-t text-sm text-gray-600"
       >
         <span>
-          Showing 
-          {{ (currentPage - 1) * itemsPerPage + 1 }} 
-          to 
-          {{ Math.min(currentPage * itemsPerPage, pelatihan.length) }} 
-          of {{ pelatihan.length }} entries
+        Showing 
+        {{ (currentPage - 1) * itemsPerPage + 1 }} 
+        to 
+        {{ Math.min(currentPage * itemsPerPage, filteredData.length) }} 
+        of {{ filteredData.length }} entries
         </span>
+
         <div class="flex space-x-2">
           <button 
             class="px-3 py-1 border rounded-lg hover:bg-gray-100"
@@ -272,105 +276,136 @@ function openDetail(item) {
   showModal.value = true;
 }
 
-// Data
+// Data asli
 const pelatihan = [
   {
     nama: "Pelatihan Kepemimpinan Strategis 2024",
     penyelenggara: "LAN (Lembaga Administrasi Negara)",
     nomor: "002/LAN/2024",
-    tanggal: "15 Januari 2025",
+    tanggal: "15 Januari 2024",
     file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
   },
   {
     nama: "Brosur Training Digital Transformation",
     penyelenggara: "PT Edukasi Teknologi Indonesia",
     nomor: "002/LAN/2024",
-    tanggal: "20 Januari 2025",
+    tanggal: "20 Januari 2024",
     file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
   },
   {
     nama: "Brosur Sertifikasi ISO 9001:2015",
     penyelenggara: "Consultant Group Indonesia",
     nomor: "002/LAN/2024",
-    tanggal: "25 Januari 2025",
+    tanggal: "25 Januari 2024",
     file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
   },
   {
     nama: "Brosur Pelatihan Manajemen Keuangan Publik",
-    penyelenggara: "BKN (Badan Kepegawaian Negara",
+    penyelenggara: "BKN (Badan Kepegawaian Negara)",
     nomor: "002/LAN/2024",
-    tanggal: "25 Januari 2025",
+    tanggal: "25 Januari 2024",
     file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
   },
   {
     nama: "Brosur Workshop Data Analytics",
     penyelenggara: "Institut Teknologi Bandung",
-    nomor: "002/LAN/2025",
+    nomor: "002/LAN/2024",
     tanggal: "25 Januari 2024",
     file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
   },
-   {
+  {
     nama: "Brosur Pelatihan Project Management Professional",
     penyelenggara: "PT Manajemen Proyek Nusantara",
-    nomor: "002/LAN/2024",
+    nomor: "002/LAN/2025",
     tanggal: "25 Januari 2025",
-    file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
+    file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
   },
   {
     nama: "Brosur Sertifikasi COBIT 2019",
     penyelenggara: "Asosiasi IT Governance Indonesia",
-    nomor: "002/LAN/2024",
+    nomor: "002/LAN/2025",
     tanggal: "08 Februari 2025",
-    file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
+    file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
   },
   {
     nama: "Brosur Pelatihan Audit Internal",
     penyelenggara: "BPKP (Badan Pengawasan Keuangan dan Pembangunan)",
-    nomor: "002/LAN/2024",
+    nomor: "002/LAN/2025",
     tanggal: "12 Februari 2025",
-    file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
+    file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
   },
   {
     nama: "Brosur Training Cybersecurity Awareness",
     penyelenggara: "PT Keamanan Siber Indonesia",
-    nomor: "002/LAN/2024",
+    nomor: "002/LAN/2025",
     tanggal: "15 Februari 2025",
-    file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
+    file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
   },
   {
     nama: "Brosur Pelatihan Sistem Manajemen Mutu",
     penyelenggara: "Universitas Gajah Mada",
-    nomor: "002/LAN/2024",
+    nomor: "002/LAN/2025",
     tanggal: "18 Februari 2025",
-    file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
+    file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
   },
   {
     nama: "Pelatihan Kepemimpinan Strategis 2024",
     penyelenggara: "LAN (Lembaga Administrasi Negara)",
-    nomor: "002/LAN/2024",
+    nomor: "002/LAN/2025",
     tanggal: "15 Januari 2025",
-    file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
+    file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
   },
   {
-    nama: "Pelatihan Kepemimpinan Strategis 2024",
-    penyelenggara: "LAN (Lembaga Administrasi Negara)",
-    nomor: "002/LAN/2024",
-    tanggal: "15 Januari 2025",
-    file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
+    nama: "Brosur Training Digital Transformation",
+    penyelenggara: "PT Edukasi Teknologi Indonesia",
+    nomor: "002/LAN/2025",
+    tanggal: "20 Januari 2025",
+    file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
   },
+  {
+    nama: "Brosur Sertifikasi ISO 9001:2015",
+    penyelenggara: "Consultant Group Indonesia",
+    nomor: "002/LAN/2025",
+    tanggal: "25 Januari 2025",
+    file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
+  },
+
 ];
 
-// --- Pagination ---
+// State untuk filter 
+const selectedYear = ref("2025");
+const searchQuery = ref("");
+
+// Pagination
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
 
+const filteredData = computed(() => {
+  return pelatihan.filter((item) => {
+    // Ambil tahun dari tanggal surat (cari angka 4 digit)
+    const yearFromTanggal = item.tanggal.match(/\d{4}/);
+    const tahunItem = yearFromTanggal ? parseInt(yearFromTanggal[0]) : null;
+
+    const matchYear =
+      selectedYear.value === "" || tahunItem === parseInt(selectedYear.value);
+
+    const matchSearch =
+      searchQuery.value === "" ||
+      Object.values(item).some((val) =>
+        String(val).toLowerCase().includes(searchQuery.value.toLowerCase())
+      );
+
+    return matchYear && matchSearch;
+  });
+});
+
 const totalPages = computed(() => {
-  return Math.ceil(pelatihan.length / itemsPerPage.value);
+  return Math.ceil(filteredData.value.length / itemsPerPage.value);
 });
 
 const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage.value;
-  return pelatihan.slice(start, start + itemsPerPage.value);
+  return filteredData.value.slice(start, start + itemsPerPage.value);
 });
 
 </script>
