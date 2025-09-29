@@ -182,17 +182,18 @@
     class="bg-white w-full max-w-5xl rounded-2xl shadow-xl p-8 relative 
            max-h-[90vh] overflow-y-auto"
   >
-    <!-- Tombol Close -->
-    <button
-      @click="showModal = false"
-      class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl"
-    >
-      ✕
-    </button>
+     <!-- Tombol Close -->
+  <button
+    @click="showModal = false"
+    class="sticky top-1 float-right text-gray-400 hover:text-gray-700 text-xl z-10"
+  >
+    ✕
+  </button>
+
 
     <!-- Judul -->
     <h2 class="text-2xl font-bold mb-8 text-gray-900">
-      Brosur Pelatihan Kepemimpinan Strategis 2024
+      Brosur Pelatihan Kepemimpinan Strategis 2025
     </h2>
 
     <!-- Grid Card Detail -->
@@ -349,7 +350,7 @@ const pelatihan = [
     file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
   },
   {
-    nama: "Pelatihan Kepemimpinan Strategis 2024",
+    nama: "Pelatihan Kepemimpinan Strategis 2025",
     penyelenggara: "LAN (Lembaga Administrasi Negara)",
     nomor: "002/LAN/2025",
     tanggal: "15 Januari 2025",

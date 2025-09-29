@@ -22,21 +22,10 @@
     </router-link>
 
     <!-- Container logo -->
-<div class="flex items-center justify-center gap-2">
-  <!-- Logo BKPSDM -->
-  <img
-    src="@/assets/images/logo/bkpsdm.png"
-    alt="Logo BKPSDM"
-    class="h-[70px] w-auto"
-  />
-
-  <!-- Logo utama -->
-  <img
-    src="@/assets/images/logo/logo.png"
-    alt="Logo Utama"
-    class="h-[140px] w-auto"
-  />
-</div>
+    <div class="flex items-center justify-center gap-2">
+      <img src="@/assets/images/logo/bkpsdm.png" alt="Logo BKPSDM" class="h-[70px] w-auto" />
+      <img src="@/assets/images/logo/logo.png" alt="Logo Utama" class="h-[140px] w-auto" />
+    </div>
 
     <!-- Judul -->
     <div class="text-center text-white mb-8">
@@ -47,39 +36,17 @@
     </div>
 
     <!-- Kontainer Tabel -->
-    <div
-      class="bg-white shadow-xl rounded-xl w-full max-w-6xl overflow-hidden font-inter"
-    >
-      <!-- Filter Atas -->
-<div
-  class="flex flex-wrap justify-between items-center p-4 border-b border-gray-200 gap-4"
->
-  <div class="flex items-center space-x-2">
-    <label for="year" class="text-sm font-semibold text-gray-700"
-      >Tahun:</label
-    >
-    <select
-      id="year"
-      v-model="selectedYear"
-      class="border border-gray-300 rounded-lg px-2 py-1 text-sm"
-    >
-      <option value="all">Semua</option>
-      <option 
-        v-for="year in years" 
-        :key="year" 
-        :value="year"
-      >
-        {{ year }}
-      </option>
-    </select>
-  </div>
-  <input
-    type="text"
-    v-model="searchQuery"
-    placeholder="Search..."
-    class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-60"
-  />
-</div>
+    <div class="bg-white shadow-xl rounded-xl w-full max-w-6xl overflow-hidden font-inter">
+      
+      <!-- Filter Atas (Search) -->
+      <div class="flex justify-end p-4 border-b border-gray-200">
+        <input
+          type="text"
+          v-model="searchQuery"
+          placeholder="Search..."
+          class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-60"
+        />
+      </div>
 
       <!-- Tabel -->
       <div class="overflow-x-auto">
@@ -88,9 +55,8 @@
             <tr>
               <th class="px-4 py-3">No</th>
               <th class="px-4 py-3">Nama Pelatihan</th>
-              <th class="px-4 py-3">Jenis Pelatihan</th>
-              <th class="px-4 py-3">Metode Pelatihan</th>
-              <th class="px-4 py-3">Pelaksanaan Pelatihan</th>
+              <th class="px-4 py-3">Pengertian</th>
+              <th class="px-4 py-3">Tujuan</th>
               <th class="px-4 py-3">Penyelenggara</th>
               <th class="px-4 py-3">Detail</th>
             </tr>
@@ -98,7 +64,7 @@
           <tbody>
             <tr
               v-for="(item, index) in paginatedData"
-              :key="index"
+              :key="item.id"
               class="border-b"
             >
               <td class="px-4 py-3">
@@ -107,11 +73,10 @@
               <td class="px-4 py-3 font-semibold text-blue-600">
                 {{ item.nama }}
               </td>
-              <td class="px-4 py-3">{{ item.jenis }}</td>
-              <td class="px-4 py-3">{{ item.metode }}</td>
-              <td class="px-4 py-3">{{ item.pelaksanaan }}</td>
+              <td class="px-4 py-3">{{ item.pengertianRingkas }}</td>
+              <td class="px-4 py-3">{{ item.tujuanRingkas }}</td>
               <td class="px-4 py-3">{{ item.penyelenggara }}</td>
-              <td class="px-4 py-2 border">
+              <td class="px-4 py-2">
                 <button
                   class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
                   @click="openDetail(item)"
@@ -125,15 +90,13 @@
       </div>
 
       <!-- Footer Pagination -->
-      <div
-        class="flex justify-between items-center px-4 py-3 border-t text-sm text-gray-600"
-      >
+      <div class="flex justify-between items-center px-4 py-3 border-t text-sm text-gray-600">
         <span>
-        Showing 
-        {{ (currentPage - 1) * itemsPerPage + 1 }} 
-        to 
-        {{ Math.min(currentPage * itemsPerPage, filteredData.length) }} 
-        of {{ filteredData.length }} entries
+          Showing 
+          {{ (currentPage - 1) * itemsPerPage + 1 }} 
+          to 
+          {{ Math.min(currentPage * itemsPerPage, filteredData.length) }} 
+          of {{ filteredData.length }} entries
         </span>
 
         <div class="flex space-x-2">
@@ -164,88 +127,110 @@
           </button>
         </div>
       </div>
+    </div>
 
     <!-- Modal Detail -->
 <div
   v-if="showModal"
   class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
 >
-  <div class="bg-white w-full max-w-5xl rounded-xl shadow-lg p-8 relative overflow-y-auto max-h-[90vh]">
+  <div
+  class="bg-white w-full max-w-5xl rounded-3xl shadow-2xl p-8 relative max-h-[90vh]"
+>
     <!-- Tombol Close -->
-    <button
-      @click="showModal = false"
-      class="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
-    >
-      ✕
-    </button>
-
+  <button
+    @click="showModal = false"
+    class="sticky top-1 float-right text-gray-400 hover:text-gray-700 text-xl z-10"
+  >
+    ✕
+  </button>
+    <div class="overflow-y-auto max-h-[80vh] pr-2">
     <!-- Judul -->
     <h2 class="text-2xl font-bold mb-6 text-gray-800 break-words">
       {{ selected.nama }}
     </h2>
 
-    <!-- Grid Card Detail -->
+    <!-- Grid Detail -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Informasi Pelatihan -->
-      <div class="bg-blue-50 p-5 rounded-xl border border-blue-200">
+
+        <div class="bg-red-50 p-5 rounded-xl border border-red-200">
         <div class="flex items-center gap-2 mb-2">
-          <img src="@/assets/icons/Book.svg" alt="Book" class="h-6 w-6" />
-          <h3 class="font-semibold text-blue-800 break-words whitespace-normal">
-            Informasi Pelatihan
-          </h3>
+        <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
+        <h3 class="font-semibold text-red-800">Pengertian</h3>
         </div>
-        <p class="break-words whitespace-normal"><b>Metode:</b> {{ selected.metode }}</p>
-        <p class="break-words whitespace-normal"><b>Jenis:</b> {{ selected.jenis }}</p>
+        <p>{{ selected.pengertianDetail }}</p>
+        </div>
+
+      <!-- Tujuan Pelatihan -->
+      <div class="bg-orange-50 p-5 rounded-xl border border-orange-200">
+        <div class="flex items-center gap-2 mb-2">
+        <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
+        <h3 class="font-semibold text-orange-800">Tujuan Pelatihan</h3>
+        </div>
+        <p>{{ selected.tujuanDetail }}</p>
+      </div>
+
+      <!-- Jadwal dan Tempat -->
+      <div class="bg-indigo-50 p-5 rounded-xl border border-indigo-200">
+        <h3 class="font-semibold text-indigo-800">Jadwal dan Tempat</h3>
+        <div class="flex items-center gap-2 mb-2">
+        <img src="@/assets/icons/Kalender.svg" alt="Kalender" class="h-6 w-6" />
+        <p>{{ selected.jadwal }}</p>
+        <img src="@/assets/icons/Map_ungu.svg" alt="Map" class="h-6 w-6" />
+        <p>{{ selected.tempat }}</p>
+        </div>
       </div>
 
       <!-- Penyelenggara -->
       <div class="bg-purple-50 p-5 rounded-xl border border-purple-200">
         <div class="flex items-center gap-2 mb-2">
-          <img src="@/assets/icons/Users.svg" alt="Users" class="h-6 w-6" />
-          <h3 class="font-semibold text-purple-800 break-words whitespace-normal">
-            Penyelenggara
-          </h3>
+        <img src="@/assets/icons/Users.svg" alt="Users" class="h-6 w-6" />
+        <h3 class="font-semibold text-purple-800">Penyelenggara</h3>
         </div>
-        <p class="break-words whitespace-normal">{{ selected.penyelenggara }}</p>
+        <p>{{ selected.penyelenggara }}</p>
       </div>
 
-      <!-- Jadwal & Biaya -->
+      <!-- Narasumber -->
+      <div class="bg-pink-50 p-5 rounded-xl border border-pink-200">
+        <div class="flex items-center gap-2 mb-2">
+        <img src="@/assets/icons/User_ungu.svg" alt="User" class="h-6 w-6" />
+        <h3 class="font-semibold text-purple-800">Narasumber</h3>
+        </div>
+        <p>{{ selected.narasumber }}</p>
+      </div>
+
+      <!-- Manfaat -->
+      <div class="bg-blue-50 p-5 rounded-xl border border-blue-200">
+        <div class="flex items-center gap-2 mb-2">
+        <img src="@/assets/icons/File text.svg" alt="File" class="h-6 w-6" />
+        <h3 class="font-semibold text-blue-800">Manfaat</h3>
+        </div>
+        <p>{{ selected.manfaat }}</p>
+      </div>
+
+      <!-- Isi Materi -->
       <div class="bg-green-50 p-5 rounded-xl border border-green-200">
         <div class="flex items-center gap-2 mb-2">
-          <img src="@/assets/icons/Calendar.svg" alt="Calendar" class="h-6 w-6" />
-          <h3 class="font-semibold text-green-800 break-words whitespace-normal">
-            Jadwal & Biaya
-          </h3>
+        <img src="@/assets/icons/Calendar.svg" alt="Calendar" class="h-6 w-6" />
+        <h3 class="font-semibold text-green-800">Isi Materi Pelatihan</h3>
         </div>
-        <p class="break-words whitespace-normal"><b>Pelaksanaan:</b> {{ selected.pelaksanaan }}</p>
-        <p class="break-words whitespace-normal"><b>Estimasi Biaya:</b> {{ selected.estimasi }}</p>
+        <p>{{ selected.materi }}</p>
       </div>
 
-      <!-- Tujuan Pelatihan -->
-      <div class="bg-orange-50 p-5 rounded-xl border border-orange-200">
+      <!-- Output -->
+      <div class="bg-yellow-50 p-5 rounded-xl border border-yellow-200">
         <div class="flex items-center gap-2 mb-2">
-          <img src="@/assets/icons/Book-2.svg" alt="Book-2" class="h-6 w-6" />
-          <h3 class="font-semibold text-orange-800 break-words whitespace-normal">
-            Tujuan Pelatihan
-          </h3>
+        <img src="@/assets/icons/Info.svg" alt="Info" class="h-6 w-6" />
+        <h3 class="font-semibold text-yellow-800">Output Pelatihan</h3>
         </div>
-        <p class="break-words whitespace-normal">{{ selected.tujuan }}</p>
-      </div>
-
-      <!-- Keterangan -->
-      <div class="bg-yellow-50 p-5 rounded-xl border border-yellow-200 col-span-1 md:col-span-2">
-        <div class="flex items-center gap-2 mb-2">
-          <img src="@/assets/icons/Info.svg" alt="Info" class="h-6 w-6" />
-          <h3 class="font-semibold text-yellow-800 break-words whitespace-normal">
-            Keterangan
-          </h3>
-        </div>
-        <p class="break-words whitespace-normal">{{ selected.keterangan }}</p>
+        <p>{{ selected.output }}</p>
       </div>
     </div>
   </div>
+  </div>
 </div>
-</div>
+
+
   </div>
 </template>
 
@@ -255,182 +240,203 @@ import { ref, computed } from "vue";
 const showModal = ref(false);
 const selected = ref({});
 const searchQuery = ref("");
-const selectedYear = ref("all");
 
+// --- Data Dummy ---
 
-const years = Array.from({ length: 2025 - 2017 + 1 }, (_, i) => 2017 + i);
-
-// Data
-const pelatihan = [
+  const pelatihan = [
   {
-    nama: "Pelatihan Kepemimpinan",
-    jenis: "Manajemen dan Leadership",
-    metode: "Tatap Muka",
-    pelaksanaan: "15–20 Januari 2024",
-    penyelenggara: "PT. Mandiri Training Center",
-    tujuan: "Pelatihan untuk pengembangan kemampuan kepemimpinan dan manajemen tim",
-    estimasi: "Rp 5.000.000",
-    keterangan: "Kuota tersedia 15 peserta",
-    tahun: 2024,
+    id: 1,
+    nama: "Pelatihan Kepemimpinan Dasar",
+    pengertianRingkas:"Pelatihan untuk membangun keterampilan kepemimpinan dasar",
+    tujuanRingkas:"Pelatihan untuk pengembangan kemampuan kepemimpinan dan manajemen tim",
+    jadwal: "15–20 Januari 2024",
+    tempat: "Balai Kota Surakarta, Jl. Jend. Sudirman No.2, Kedung Lumbu, Solo",
+    penyelenggara: "LAN (Lembaga Administrasi Negara)",
+    narasumber: "Akademisi/Dosen dan Praktisi Profesional",
+    manfaat: "Peserta akan dapat meningkatkan kemampuan kepemimpinan, manajemen tim, dan komunikasi.",
+    tujuanDetail: "Mengembangkan kemampuan kepemimpinan dan manajemen tim yang efektif, meningkatkan kemampuan komunikasi dan motivasi, serta membangun karakter pemimpin yang inspiratif. Program ini dirancang untuk membekali para calon pemimpin dengan keterampilan fundamental dalam memimpin tim, mengelola konflik, dan menciptakan lingkungan kerja yang produktif.",
+    materi: "Materi pelatihan mencakup teori dan praktik kepemimpinan, manajemen tim, komunikasi, dan motivasi.",
+    pengertianDetail: "Pelatihan Kepemimpinan Dasar adalah program komprehensif yang dirancang untuk membantu peserta memahami dan mengaplikasikan prinsip-prinsip kepemimpinan fundamental. Program ini mencakup pemahaman mendalam tentang gaya kepemimpinan, psikologi tim, komunikasi efektif, dan strategi motivasi yang dapat diterapkan dalam berbagai situasi kerja.",
+    output: "Peserta mampu memahami prinsip kepemimpinan, mengelola tim efektif, dan menerapkan gaya kepemimpinan sesuai situasi."
   },
   {
+    id: 2,
     nama: "Pelatihan Manajemen Proyek",
-    jenis: "Manajemen dan Leadership",
-    metode: "Online",
-    pelaksanaan: "01–05 Februari 2025",
-    penyelenggara: "CV. Excellence Project Academy",
-    tujuan: "Pelatihan manajemen proyek dengan metodologi PMBOK dan Agile",
-    estimasi: "Rp 3.500.000",
-    keterangan: "Sertifikat PMP tersedia",
-    tahun: 2025,
+    pengertianRingkas:"Pelatihan metodologi pengelolaan proyek profesional",
+    tujuanRingkas:"Menguasai metodologi manajemen proyek modern",
+    jadwal: "01-05 Februari 2025",
+    tempat: "Virtual via Platform Online",
+    penyelenggara: "BKPSDM dan Perguruan Tinggi",
+    narasumber: "Pakar dan Tenaga Ahli Manajemen Proyek",
+    manfaat: "Peserta akan dapat merencanakan dan mengendalikan proyek secara efektif.",
+    tujuanDetail: "Menguasai metodologi manajemen proyek PMBOK dan Agile, mampu merencanakan dan mengendalikan proyek secara efektif, serta meningkatkan kemampuan leadership dalam tim proyek. Program ini memberikan pemahaman mendalam tentang lifecycle proyek, risk management, resource allocation, dan teknik monitoring yang efektif untuk memastikan keberhasilan proyek",
+    materi: "Materi pelatihan mencakup teori dan praktik manajemen proyek, PMBOK, Agile, dan leadership.",
+    pengertianDetail: "Pelatihan Manajemen Proyek adalah program intensif yang bertujuan untuk membantu peserta memahami dan mengaplikasikan prinsip-prinsip manajemen proyek sesuai standar internasional. Program ini mencakup pembelajaran tentang planning, execution, monitoring, controlling, dan closing proyek dengan menggunakan framework yang telah terbukti efektif di industri global.",
+    output: "Peserta mampu menguasai metodologi PMBOK dan Agile, merencanakan proyek, dan memimpin tim proyek"
   },
   {
-    nama: "Pelatihan Digital Marketing",
-    jenis: "Marketing & Sales",
-    metode: "Hybrid",
-    pelaksanaan: "10-14 Feb 2025",
-    penyelenggara: "Digital Marketing Institute Indonesia",
-    tujuan: "Pelatihan strategi pemasaran digital, SEO, dan social media marketing",
-    estimasi: "Rp 4.200.000",
-    keterangan: "Menunggu konfirmasi venue",
-    tahun: 2025,
+    id: 3,
+    nama: "Pelatihan Kepemimpinan Dasar",
+    pengertianRingkas:"Pelatihan untuk membangun keterampilan kepemimpinan dasar",
+    tujuanRingkas:"Pelatihan untuk pengembangan kemampuan kepemimpinan dan manajemen tim",
+    jadwal: "15–20 Januari 2024",
+    tempat: "Balai Kota Surakarta, Jl. Jend. Sudirman No.2, Kedung Lumbu, Solo",
+    penyelenggara: "LAN (Lembaga Administrasi Negara)",
+    narasumber: "Akademisi/Dosen dan Praktisi Profesional",
+    manfaat: "Peserta akan dapat meningkatkan kemampuan kepemimpinan, manajemen tim, dan komunikasi.",
+    tujuanDetail: "Mengembangkan kemampuan kepemimpinan dan manajemen tim yang efektif, meningkatkan kemampuan komunikasi dan motivasi, serta membangun karakter pemimpin yang inspiratif. Program ini dirancang untuk membekali para calon pemimpin dengan keterampilan fundamental dalam memimpin tim, mengelola konflik, dan menciptakan lingkungan kerja yang produktif.",
+    materi: "Materi pelatihan mencakup teori dan praktik kepemimpinan, manajemen tim, komunikasi, dan motivasi.",
+    pengertianDetail: "Pelatihan Kepemimpinan Dasar adalah program komprehensif yang dirancang untuk membantu peserta memahami dan mengaplikasikan prinsip-prinsip kepemimpinan fundamental. Program ini mencakup pemahaman mendalam tentang gaya kepemimpinan, psikologi tim, komunikasi efektif, dan strategi motivasi yang dapat diterapkan dalam berbagai situasi kerja.",
+    output: "Peserta mampu memahami prinsip kepemimpinan, mengelola tim efektif, dan menerapkan gaya kepemimpinan sesuai situasi."
   },
   {
-    nama: "Pelatihan Data Analytics dengan Python",
-    jenis: "Teknologi Informasi",
-    metode: "Tatap Muka",
-    pelaksanaan: "02-25 Feb 2025",
-    penyelenggara: "Digital Marketing Institute Indonesia",
-    tujuan: "Pelatihan analisis data menggunakan Python, Pandas, dan visualisasi data",
-    estimasi: "Rp 6.500.000",
-    keterangan: "Include laptop dan software",
-    tahun: 2025,
+    id: 4,
+    nama: "Pelatihan Manajemen Proyek",
+    pengertianRingkas:"Pelatihan metodologi pengelolaan proyek profesional",
+    tujuanRingkas:"Menguasai metodologi manajemen proyek modern",
+    jadwal: "01-05 Februari 2025",
+    tempat: "Virtual via Platform Online",
+    penyelenggara: "BKPSDM dan Perguruan Tinggi",
+    narasumber: "Pakar dan Tenaga Ahli Manajemen Proyek",
+    manfaat: "Peserta akan dapat merencanakan dan mengendalikan proyek secara efektif.",
+    tujuanDetail: "Menguasai metodologi manajemen proyek PMBOK dan Agile, mampu merencanakan dan mengendalikan proyek secara efektif, serta meningkatkan kemampuan leadership dalam tim proyek. Program ini memberikan pemahaman mendalam tentang lifecycle proyek, risk management, resource allocation, dan teknik monitoring yang efektif untuk memastikan keberhasilan proyek",
+    materi: "Materi pelatihan mencakup teori dan praktik manajemen proyek, PMBOK, Agile, dan leadership.",
+    pengertianDetail: "Pelatihan Manajemen Proyek adalah program intensif yang bertujuan untuk membantu peserta memahami dan mengaplikasikan prinsip-prinsip manajemen proyek sesuai standar internasional. Program ini mencakup pembelajaran tentang planning, execution, monitoring, controlling, dan closing proyek dengan menggunakan framework yang telah terbukti efektif di industri global.",
+    output: "Peserta mampu menguasai metodologi PMBOK dan Agile, merencanakan proyek, dan memimpin tim proyek"
   },
   {
-    nama: "Pelatihan Akuntansi Keuangan Dasar",
-    jenis: "Keuangan & Akuntansi",
-    metode: "Online",
-    pelaksanaan: "05-10 Mar 2025",
-    penyelenggara: "Institute Keuangan Profesional",
-    tujuan: "Pelatihan dasar-dasar akuntansi dan laporan keuangan untuk non-akuntan",
-    estimasi: "Rp 2.800.000",
-    keterangan: "Materi dalam Bahasa Indonesia",
-    tahun: 2025
+    id: 5,
+    nama: "Pelatihan Kepemimpinan Dasar",
+    pengertianRingkas:"Pelatihan untuk membangun keterampilan kepemimpinan dasar",
+    tujuanRingkas:"Pelatihan untuk pengembangan kemampuan kepemimpinan dan manajemen tim",
+    jadwal: "15–20 Januari 2024",
+    tempat: "Balai Kota Surakarta, Jl. Jend. Sudirman No.2, Kedung Lumbu, Solo",
+    penyelenggara: "LAN (Lembaga Administrasi Negara)",
+    narasumber: "Akademisi/Dosen dan Praktisi Profesional",
+    manfaat: "Peserta akan dapat meningkatkan kemampuan kepemimpinan, manajemen tim, dan komunikasi.",
+    tujuanDetail: "Mengembangkan kemampuan kepemimpinan dan manajemen tim yang efektif, meningkatkan kemampuan komunikasi dan motivasi, serta membangun karakter pemimpin yang inspiratif. Program ini dirancang untuk membekali para calon pemimpin dengan keterampilan fundamental dalam memimpin tim, mengelola konflik, dan menciptakan lingkungan kerja yang produktif.",
+    materi: "Materi pelatihan mencakup teori dan praktik kepemimpinan, manajemen tim, komunikasi, dan motivasi.",
+    pengertianDetail: "Pelatihan Kepemimpinan Dasar adalah program komprehensif yang dirancang untuk membantu peserta memahami dan mengaplikasikan prinsip-prinsip kepemimpinan fundamental. Program ini mencakup pemahaman mendalam tentang gaya kepemimpinan, psikologi tim, komunikasi efektif, dan strategi motivasi yang dapat diterapkan dalam berbagai situasi kerja.",
+    output: "Peserta mampu memahami prinsip kepemimpinan, mengelola tim efektif, dan menerapkan gaya kepemimpinan sesuai situasi."
   },
   {
-    nama: "Pelatihan Customer Service Excellence",
-    jenis: "Customer Service",
-    metode: "Tatap Muka",
-    pelaksanaan: "12-14 Mar 2025",
-    penyelenggara: "Service Excellence Training Center",
-    tujuan: "Pelatihan pelayanan pelanggan terbaik dan penanganan komplain",
-    estimasi: "Rp 3.200.000",
-    keterangan: "Include role playing session",
-    tahun: 2025,
+    id: 6,
+    nama: "Pelatihan Manajemen Proyek",
+    pengertianRingkas:"Pelatihan metodologi pengelolaan proyek profesional",
+    tujuanRingkas:"Menguasai metodologi manajemen proyek modern",
+    jadwal: "01-05 Februari 2025",
+    tempat: "Virtual via Platform Online",
+    penyelenggara: "BKPSDM dan Perguruan Tinggi",
+    narasumber: "Pakar dan Tenaga Ahli Manajemen Proyek",
+    manfaat: "Peserta akan dapat merencanakan dan mengendalikan proyek secara efektif.",
+    tujuanDetail: "Menguasai metodologi manajemen proyek PMBOK dan Agile, mampu merencanakan dan mengendalikan proyek secara efektif, serta meningkatkan kemampuan leadership dalam tim proyek. Program ini memberikan pemahaman mendalam tentang lifecycle proyek, risk management, resource allocation, dan teknik monitoring yang efektif untuk memastikan keberhasilan proyek",
+    materi: "Materi pelatihan mencakup teori dan praktik manajemen proyek, PMBOK, Agile, dan leadership.",
+    pengertianDetail: "Pelatihan Manajemen Proyek adalah program intensif yang bertujuan untuk membantu peserta memahami dan mengaplikasikan prinsip-prinsip manajemen proyek sesuai standar internasional. Program ini mencakup pembelajaran tentang planning, execution, monitoring, controlling, dan closing proyek dengan menggunakan framework yang telah terbukti efektif di industri global.",
+    output: "Peserta mampu menguasai metodologi PMBOK dan Agile, merencanakan proyek, dan memimpin tim proyek"
   },
   {
-    nama: "Pelatihan K3 (Keselamatan dan Kesehatan Kerja)",
-    jenis: "Keselamatan Kerja",
-    metode: "Hybrid",
-    pelaksanaan: "18-22 Mar 2025",
-    penyelenggara: "PT. Safety Training Indonesial",
-    tujuan: "Pelatihan standar K3 dan implementasi sistem manajemen keselamatan",
-    estimasi: "Rp 4.800.000	",
-    keterangan: "Sertifikat K3 Umum",
-    tahun: 2025,
+    id: 7,
+    nama: "Pelatihan Kepemimpinan Dasar",
+    pengertianRingkas:"Pelatihan untuk membangun keterampilan kepemimpinan dasar",
+    tujuanRingkas:"Pelatihan untuk pengembangan kemampuan kepemimpinan dan manajemen tim",
+    jadwal: "15–20 Januari 2024",
+    tempat: "Balai Kota Surakarta, Jl. Jend. Sudirman No.2, Kedung Lumbu, Solo",
+    penyelenggara: "LAN (Lembaga Administrasi Negara)",
+    narasumber: "Akademisi/Dosen dan Praktisi Profesional",
+    manfaat: "Peserta akan dapat meningkatkan kemampuan kepemimpinan, manajemen tim, dan komunikasi.",
+    tujuanDetail: "Mengembangkan kemampuan kepemimpinan dan manajemen tim yang efektif, meningkatkan kemampuan komunikasi dan motivasi, serta membangun karakter pemimpin yang inspiratif. Program ini dirancang untuk membekali para calon pemimpin dengan keterampilan fundamental dalam memimpin tim, mengelola konflik, dan menciptakan lingkungan kerja yang produktif.",
+    materi: "Materi pelatihan mencakup teori dan praktik kepemimpinan, manajemen tim, komunikasi, dan motivasi.",
+    pengertianDetail: "Pelatihan Kepemimpinan Dasar adalah program komprehensif yang dirancang untuk membantu peserta memahami dan mengaplikasikan prinsip-prinsip kepemimpinan fundamental. Program ini mencakup pemahaman mendalam tentang gaya kepemimpinan, psikologi tim, komunikasi efektif, dan strategi motivasi yang dapat diterapkan dalam berbagai situasi kerja.",
+    output: "Peserta mampu memahami prinsip kepemimpinan, mengelola tim efektif, dan menerapkan gaya kepemimpinan sesuai situasi."
   },
   {
-    nama: "	Pelatihan Public Speaking & Presentation",
-    jenis: "Soft Skills",
-    metode: "Tatap Muka",
-    pelaksanaan: "05-10 Mar 2025",
-    penyelenggara: "Professional Communication Institute",
-    tujuan: "Pelatihan kemampuan berbicara di depan umum dan teknik presentasi efektif",
-    estimasi: "Rp 4.000.000",
-    keterangan: "Max 20 peserta",
-    tahun: 2025,
+    id: 8,
+    nama: "Pelatihan Manajemen Proyek",
+    pengertianRingkas:"Pelatihan metodologi pengelolaan proyek profesional",
+    tujuanRingkas:"Menguasai metodologi manajemen proyek modern",
+    jadwal: "01-05 Februari 2025",
+    tempat: "Virtual via Platform Online",
+    penyelenggara: "BKPSDM dan Perguruan Tinggi",
+    narasumber: "Pakar dan Tenaga Ahli Manajemen Proyek",
+    manfaat: "Peserta akan dapat merencanakan dan mengendalikan proyek secara efektif.",
+    tujuanDetail: "Menguasai metodologi manajemen proyek PMBOK dan Agile, mampu merencanakan dan mengendalikan proyek secara efektif, serta meningkatkan kemampuan leadership dalam tim proyek. Program ini memberikan pemahaman mendalam tentang lifecycle proyek, risk management, resource allocation, dan teknik monitoring yang efektif untuk memastikan keberhasilan proyek",
+    materi: "Materi pelatihan mencakup teori dan praktik manajemen proyek, PMBOK, Agile, dan leadership.",
+    pengertianDetail: "Pelatihan Manajemen Proyek adalah program intensif yang bertujuan untuk membantu peserta memahami dan mengaplikasikan prinsip-prinsip manajemen proyek sesuai standar internasional. Program ini mencakup pembelajaran tentang planning, execution, monitoring, controlling, dan closing proyek dengan menggunakan framework yang telah terbukti efektif di industri global.",
+    output: "Peserta mampu menguasai metodologi PMBOK dan Agile, merencanakan proyek, dan memimpin tim proyek"
   },
   {
-    nama: "Pelatihan Supply Chain Management",
-    jenis: "Operations & Supply Chain",
-    metode: "Online",
-    pelaksanaan: "01-05 Apr 2025",
-    penyelenggara: "Supply Chain Excellence Academy",
-    tujuan: "Pelatihan manajemen rantai pasok dan optimasi distribusi",
-    estimasi: "Rp 3.800.000",
-    keterangan: "Ditunda hingga pemberitahuan lebih lanjut",
-    tahun: 2025,
+    id: 9,
+    nama: "Pelatihan Kepemimpinan Dasar",
+    pengertianRingkas:"Pelatihan untuk membangun keterampilan kepemimpinan dasar",
+    tujuanRingkas:"Pelatihan untuk pengembangan kemampuan kepemimpinan dan manajemen tim",
+    jadwal: "15–20 Januari 2024",
+    tempat: "Balai Kota Surakarta, Jl. Jend. Sudirman No.2, Kedung Lumbu, Solo",
+    penyelenggara: "LAN (Lembaga Administrasi Negara)",
+    narasumber: "Akademisi/Dosen dan Praktisi Profesional",
+    manfaat: "Peserta akan dapat meningkatkan kemampuan kepemimpinan, manajemen tim, dan komunikasi.",
+    tujuanDetail: "Mengembangkan kemampuan kepemimpinan dan manajemen tim yang efektif, meningkatkan kemampuan komunikasi dan motivasi, serta membangun karakter pemimpin yang inspiratif. Program ini dirancang untuk membekali para calon pemimpin dengan keterampilan fundamental dalam memimpin tim, mengelola konflik, dan menciptakan lingkungan kerja yang produktif.",
+    materi: "Materi pelatihan mencakup teori dan praktik kepemimpinan, manajemen tim, komunikasi, dan motivasi.",
+    pengertianDetail: "Pelatihan Kepemimpinan Dasar adalah program komprehensif yang dirancang untuk membantu peserta memahami dan mengaplikasikan prinsip-prinsip kepemimpinan fundamental. Program ini mencakup pemahaman mendalam tentang gaya kepemimpinan, psikologi tim, komunikasi efektif, dan strategi motivasi yang dapat diterapkan dalam berbagai situasi kerja.",
+    output: "Peserta mampu memahami prinsip kepemimpinan, mengelola tim efektif, dan menerapkan gaya kepemimpinan sesuai situasi."
   },
   {
-    nama: "Pelatihan Digital Transformation Strategy",
-    jenis: "Teknologi Informasi",
-    metode: "Hybrid",
-    pelaksanaan: "08-12 Apr 2025",
-    penyelenggara: "Digital Transformation Consultancy",
-    tujuan: "Pelatihan strategi transformasi digital untuk organisasi modern",
-    estimasi: "Rp 7.200.000",
-    keterangan: "MMenunggu approval budget",
-    tahun: 2025,
+    id: 10,
+    nama: "Pelatihan Manajemen Proyek",
+    pengertianRingkas:"Pelatihan metodologi pengelolaan proyek profesional",
+    tujuanRingkas:"Menguasai metodologi manajemen proyek modern",
+    jadwal: "01-05 Februari 2025",
+    tempat: "Virtual via Platform Online",
+    penyelenggara: "BKPSDM dan Perguruan Tinggi",
+    narasumber: "Pakar dan Tenaga Ahli Manajemen Proyek",
+    manfaat: "Peserta akan dapat merencanakan dan mengendalikan proyek secara efektif.",
+    tujuanDetail: "Menguasai metodologi manajemen proyek PMBOK dan Agile, mampu merencanakan dan mengendalikan proyek secara efektif, serta meningkatkan kemampuan leadership dalam tim proyek. Program ini memberikan pemahaman mendalam tentang lifecycle proyek, risk management, resource allocation, dan teknik monitoring yang efektif untuk memastikan keberhasilan proyek",
+    materi: "Materi pelatihan mencakup teori dan praktik manajemen proyek, PMBOK, Agile, dan leadership.",
+    pengertianDetail: "Pelatihan Manajemen Proyek adalah program intensif yang bertujuan untuk membantu peserta memahami dan mengaplikasikan prinsip-prinsip manajemen proyek sesuai standar internasional. Program ini mencakup pembelajaran tentang planning, execution, monitoring, controlling, dan closing proyek dengan menggunakan framework yang telah terbukti efektif di industri global.",
+    output: "Peserta mampu menguasai metodologi PMBOK dan Agile, merencanakan proyek, dan memimpin tim proyek"
   },
   {
-    nama: "Pelatihan Digital Transformation Strategy",
-    jenis: "Teknologi Informasi",
-    metode: "Hybrid",
-    pelaksanaan: "08-12 Apr 2025",
-    penyelenggara: "Digital Transformation Consultancy",
-    tujuan: "Pelatihan strategi transformasi digital untuk organisasi modern",
-    estimasi: "Rp 7.200.000",
-    keterangan: "Menunggu approval budget",
-    tahun: 2025,
+    id: 9,
+    nama: "Pelatihan Kepemimpinan Dasar",
+    pengertianRingkas:"Pelatihan untuk membangun keterampilan kepemimpinan dasar",
+    tujuanRingkas:"Pelatihan untuk pengembangan kemampuan kepemimpinan dan manajemen tim",
+    jadwal: "15–20 Januari 2024",
+    tempat: "Balai Kota Surakarta, Jl. Jend. Sudirman No.2, Kedung Lumbu, Solo",
+    penyelenggara: "LAN (Lembaga Administrasi Negara)",
+    narasumber: "Akademisi/Dosen dan Praktisi Profesional",
+    manfaat: "Peserta akan dapat meningkatkan kemampuan kepemimpinan, manajemen tim, dan komunikasi.",
+    tujuanDetail: "Mengembangkan kemampuan kepemimpinan dan manajemen tim yang efektif, meningkatkan kemampuan komunikasi dan motivasi, serta membangun karakter pemimpin yang inspiratif. Program ini dirancang untuk membekali para calon pemimpin dengan keterampilan fundamental dalam memimpin tim, mengelola konflik, dan menciptakan lingkungan kerja yang produktif.",
+    materi: "Materi pelatihan mencakup teori dan praktik kepemimpinan, manajemen tim, komunikasi, dan motivasi.",
+    pengertianDetail: "Pelatihan Kepemimpinan Dasar adalah program komprehensif yang dirancang untuk membantu peserta memahami dan mengaplikasikan prinsip-prinsip kepemimpinan fundamental. Program ini mencakup pemahaman mendalam tentang gaya kepemimpinan, psikologi tim, komunikasi efektif, dan strategi motivasi yang dapat diterapkan dalam berbagai situasi kerja.",
+    output: "Peserta mampu memahami prinsip kepemimpinan, mengelola tim efektif, dan menerapkan gaya kepemimpinan sesuai situasi."
   },
-  {
-    nama: "Pelatihan Digital Transformation Strategy",
-    jenis: "Teknologi Informasi",
-    metode: "Hybrid",
-    pelaksanaan: "08-12 Apr 2025",
-    penyelenggara: "Digital Transformation Consultancy",
-    tujuan: "Pelatihan strategi transformasi digital untuk organisasi modern",
-    estimasi: "Rp 7.200.000",
-    keterangan: "MMenunggu approval budget",
-    tahun: 2025,
-  },
-  
 ];
 
+// --- Filtered Data ---
 const filteredData = computed(() => {
   return pelatihan.filter((item) => {
-    // Ambil tahun dari pelaksanaan (regex 4 digit terakhir)
-    const yearFromPelaksanaan = item.pelaksanaan.match(/\d{4}/);
-    const tahunItem = yearFromPelaksanaan ? parseInt(yearFromPelaksanaan[0]) : null;
-
-    const matchYear =
-      selectedYear.value === "all" || tahunItem === selectedYear.value;
-
-    const matchSearch =
+    return (
       searchQuery.value === "" ||
       Object.values(item).some((val) =>
         String(val).toLowerCase().includes(searchQuery.value.toLowerCase())
-      );
-
-    return matchYear && matchSearch;
+      )
+    );
   });
 });
 
-
-
 // --- Pagination ---
 const currentPage = ref(1);
-const itemsPerPage = ref(10);
+const itemsPerPage = 10;
 
 const totalPages = computed(() => {
-  return Math.ceil(filteredData.value.length / itemsPerPage.value);
+  return Math.ceil(filteredData.value.length / itemsPerPage);
 });
 
 const paginatedData = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value;
-  return filteredData.value.slice(start, start + itemsPerPage.value);
+  const start = (currentPage.value - 1) * itemsPerPage;
+  return filteredData.value.slice(start, start + itemsPerPage);
 });
 
+// --- Open Detail ---
 function openDetail(item) {
   selected.value = item;
   showModal.value = true;
