@@ -157,12 +157,12 @@
   <div class="p-4 border rounded-xl bg-purple-50">
     <div class="flex items-center gap-2 mb-1">
       <img src="@/assets/icons/Kalender.svg" alt="Kalender" class="h-6 w-6" />
-      <h3 class="font-semibold text-purple-700">Jadwal</h3>
+      <h3 class="font-semibold text-purple-700 text-sm sm:text-base">Jadwal</h3>
     </div>
     <p>{{ selected.jadwal }}</p>
     <div class="flex items-center gap-2 mb-1">
       <img src="@/assets/icons/Map_ungu.svg" alt="Map" class="h-6 w-6" />
-      <h3 class="font-semibold text-purple-700">Tempat</h3>
+      <h3 class="font-semibold text-purple-700 text-sm sm:text-base">Tempat</h3>
       
     </div>
     <p>{{ selected.tempat }}</p>
@@ -176,14 +176,14 @@
       Penyelenggara
     </h3>
   </div>
-  <p class="text-sm sm:text-base">{{ selected.penyelenggara }}</p>
+  <p>{{ selected.penyelenggara }}</p>
 </div>
 
   <!-- Narasumber -->
   <div class="p-4 border rounded-xl bg-indigo-50">
     <div class="flex items-center gap-2 mb-1">
       <img src="@/assets/icons/Users-blue.svg" alt="User" class="h-6 w-6" />
-      <h3 class="font-semibold text-indigo-700">Narasumber</h3>
+      <h3 class="font-semibold text-indigo-700 text-sm sm:text-base">Narasumber</h3>
     </div>
     <p>{{ selected.narasumber }}</p>
   </div>
@@ -192,7 +192,7 @@
   <div class="p-4 border rounded-xl bg-green-50">
     <div class="flex items-center gap-2 mb-1">
       <img src="@/assets/icons/Calendar.svg" alt="Calendar" class="h-6 w-6" />
-      <h3 class="font-semibold text-green-700">Isi Materi</h3>
+      <h3 class="font-semibold text-green-700 text-sm sm:text-base">Isi Materi</h3>
     </div>
     <p>{{ selected.materi }}</p>
   </div>
@@ -201,7 +201,7 @@
   <div class="p-4 border rounded-xl bg-yellow-50 col-span-2">
     <div class="flex items-center gap-2 mb-1">
       <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
-      <h3 class="font-semibold text-yellow-700">Pengertian</h3>
+      <h3 class="font-semibold text-yellow-700 text-sm sm:text-base">Pengertian</h3>
     </div>
     <p>{{ selected.pengertianDetail }}</p>
   </div>
@@ -210,7 +210,7 @@
   <div class="p-4 border rounded-xl bg-orange-50 col-span-2">
     <div class="flex items-center gap-2 mb-1">
       <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
-      <h3 class="font-semibold text-orange-700">Tujuan Pelatihan</h3>
+      <h3 class="font-semibold text-orange-700 text-sm sm:text-base">Tujuan Pelatihan</h3>
     </div>
     <p>{{ selected.tujuanDetail }}</p>
   </div>
@@ -219,7 +219,7 @@
   <div class="p-4 border rounded-xl bg-blue-50 col-span-2">
     <div class="flex items-center gap-2 mb-1">
       <img src="@/assets/icons/File text.svg" alt="File" class="h-6 w-6" />
-      <h3 class="font-semibold text-blue-700">Manfaat</h3>
+      <h3 class="font-semibold text-blue-700 text-sm sm:text-base">Manfaat</h3>
     </div>
     <p>{{ selected.manfaat }}</p>
   </div>
@@ -228,7 +228,7 @@
   <div class="p-4 border rounded-xl bg-gray-50 col-span-2">
     <div class="flex items-center gap-2 mb-1">
       <img src="@/assets/icons/Info.svg" alt="Info" class="h-6 w-6" />
-      <h3 class="font-semibold text-gray-700">Output Pelatihan</h3>
+      <h3 class="font-semibold text-gray-700 text-sm sm:text-base">Output Pelatihan</h3>
     </div>
     <p>{{ selected.output }}</p>
   </div>
