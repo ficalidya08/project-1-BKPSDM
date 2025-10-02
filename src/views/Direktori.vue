@@ -78,11 +78,11 @@
               <td class="px-4 py-3">
                 {{ (currentPage - 1) * itemsPerPage + index + 1 }}
               </td>
-              <td class="px-4 py-3 text-gray-800 font-medium">{{ item.judul }}</td>
+              <td class="px-4 py-3 text-800 font-medium">{{ item.judul }}</td>
               <td class="px-4 py-3">
                 <img :src="item.foto" alt="foto penulis" class="h-12 w-12 object-cover rounded-full"/>
               </td>
-              <td class="px-4 py-3 text-gray-800 font-medium">{{ item.biodata }}
+              <td class="px-4 py-3 text-800 font-medium">{{ item.biodata }}
               </td>
               <td class="px-4 py-3">{{ item.latar }}</td>
               <td class="px-4 py-3">
@@ -104,7 +104,7 @@
       </div>
 
       <!-- Footer Pagination -->
-      <div class="flex justify-between items-center px-4 py-3 border-t text-sm text-gray-600">
+      <div class="flex justify-between items-center px-4 py-3 border-t text-sm text-600">
         <span>
           Showing {{ (currentPage - 1) * itemsPerPage + 1 }} 
           to {{ Math.min(currentPage * itemsPerPage, filteredData.length) }} 
@@ -135,101 +135,130 @@
     <!-- Modal Detail -->
 <div
   v-if="showModal"
-  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-poppins"
 >
   <div
-    class="bg-white w-full max-w-5xl rounded-2xl shadow-xl p-8 relative overflow-y-auto max-h-[90vh]"
+    class="bg-white w-full max-w-5xl rounded-3xl shadow-2xl p-8 relative max-h-[90vh]"
   >
-     <!-- Tombol Close -->
-  <button
-    @click="showModal = false"
-    class="sticky top-1 float-right text-gray-400 hover:text-gray-700 text-xl z-10"
-  >
-    ✕
-  </button>
+    <!-- Tombol Close -->
+    <button
+      @click="showModal = false"
+      class="absolute top-4 right-4 text-400 hover:text-700 text-xl z-10"
+    >
+      ✕
+    </button>
 
+    <!-- Konten scrollable -->
+    <div class="overflow-y-auto pr-2 max-h-[80vh]">
+      <!-- Judul -->
+      <h2 class="text-2xl font-bold mb-6 text-gray-800 break-words">
+        {{ selected.judul }}
+      </h2>
 
-    <!-- Judul -->
-    <h2 class="text-2xl font-bold mb-8 text-gray-900 leading-snug break-words">
-      {{ selected.judul }}
-    </h2>
-
-    <!-- Grid Foto + Biodata -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-      <!-- Foto -->
-      <div class="flex items-center justify-center">
-        <div class="w-56 h-64 bg-gray-100 border rounded-xl flex items-center justify-center overflow-hidden">
-          <img
-            v-if="selected.foto"
-            :src="selected.foto"
-            alt="Foto Penulis"
-            class="w-full h-full object-cover rounded-lg"
-          />
-          <span v-else class="text-gray-400 text-sm">Foto</span>
-        </div>
-      </div>
-
-      <!-- Biodata -->
-      <div class="bg-purple-50 border border-purple-200 p-6 rounded-xl">
-        <div class="flex items-center gap-2 mb-4">
-          <img src="@/assets/icons/Users.svg" alt="Icon" class="h-6 w-6" />
-          <h3 class="font-semibold text-purple-800">Biodata Penulis</h3>
-        </div>
-        <p class="text-sm mb-2">
-          <span class="font-medium">Nama Penulis:</span> {{ selected.namaPenulis }}
-        </p>
-        <p class="text-sm mb-2">
-          <span class="font-medium">Organisasi Perangkat Daerah (OPD):</span>
-          {{ selected.organisasi }}
-        </p>
-        <p class="text-sm">
-          <span class="font-medium">Jabatan:</span> {{ selected.jabatan }}
-        </p>
-      </div>
-    </div>
-
-    <!-- Grid Latar Belakang + File -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Latar Belakang -->
-      <div class="bg-green-50 border border-green-200 p-6 rounded-xl">
-        <div class="flex items-center gap-2 mb-3">
-          <img src="@/assets/icons/Book open.svg" alt="Book" class="h-6 w-6" />
-          <h3 class="font-semibold text-green-800">Latar Belakang</h3>
-        </div>
-        <p class="text-gray-700 text-sm leading-relaxed">
-          {{ selected.latarBelakang }}
-        </p>
-      </div>
-
-      <!-- File Laporan -->
-      <div class="bg-orange-50 border border-orange-200 p-6 rounded-xl">
-        <div class="flex items-center gap-2 mb-3">
-          <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
-          <h3 class="font-semibold text-orange-800">File Laporan</h3>
-        </div>
-        <p class="text-sm text-gray-700 mb-4">
-          Nama File: <span class="font-medium">{{ selected.namaFile }}</span>
-        </p>
-        <div class="flex gap-3">
-          <a
-            :href="selected.linkFile"
-            target="_blank"
-            class="px-4 py-2 text-sm rounded-lg border border-orange-300 text-orange-700 hover:bg-orange-100 transition"
+      <!-- Grid Foto + Biodata -->
+      <div class="flex flex-col md:flex-row gap-6 mb-8">
+        <!-- Foto -->
+        <div class="flex-shrink-0">
+          <div
+            class="w-56 h-64 bg-gray-100 border rounded-xl flex items-center justify-center overflow-hidden"
           >
-            Preview File
-          </a>
-          <a
-            :href="selected.linkFile"
-            download
-            class="px-4 py-2 text-sm rounded-lg bg-orange-600 text-white hover:bg-orange-700 transition"
-          >
-            Download File
-          </a>
+            <img
+              v-if="selected.foto"
+              :src="selected.foto"
+              alt="Foto Penulis"
+              class="w-full h-full object-cover rounded-lg"
+            />
+            <span v-else class="text-800 text-sm">Foto</span>
+          </div>
+        </div>
+
+        <!-- Biodata -->
+        <div class="flex-1 bg-purple-50 border border-purple-200 p-6 rounded-xl">
+          <!-- Header -->
+          <div class="flex items-center gap-2 mb-4">
+            <img
+              src="@/assets/icons/Users.svg"
+              alt="Icon"
+              class="h-5 w-5 text-purple-800"
+            />
+            <h3 class="font-semibold text-purple-600 leading-none">
+              Biodata Penulis
+            </h3>
+          </div>
+
+          <!-- Isi Biodata -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+            <p>
+              <span class="font-semibold text-900">Nama Penulis:</span>
+              <span class="ml-1 text-700">{{ selected.namaPenulis }}</span>
+            </p>
+            <p>
+              <span class="font-semibold text-900"
+                >Organisasi Perangkat Daerah (OPD):</span
+              >
+              <span class="ml-1 text-700">{{ selected.organisasi }}</span>
+            </p>
+            <p class="col-span-2">
+              <span class="font-semibold text-900">Jabatan:</span>
+              <span class="ml-1 text-700">{{ selected.jabatan }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid Latar Belakang + File -->
+      <div class="grid grid-cols-1 gap-6">
+        <!-- Latar Belakang -->
+        <div class="bg-green-50 border border-green-200 p-6 rounded-xl w-full">
+          <div class="flex items-center gap-2 mb-3">
+            <img
+              src="@/assets/icons/Book open.svg"
+              alt="Book"
+              class="h-6 w-6"
+            />
+            <h3 class="font-semibold text-green-800">Latar Belakang</h3>
+          </div>
+          <p class="text-700 text-sm leading-relaxed">
+            {{ selected.latarBelakang }}
+          </p>
+        </div>
+
+        <!-- File Laporan -->
+        <div class="bg-orange-50 border border-orange-200 p-6 rounded-xl w-full">
+          <div class="flex items-center gap-2 mb-3">
+            <img
+              src="@/assets/icons/Book_oren.svg"
+              alt="Book"
+              class="h-6 w-6"
+            />
+            <h3 class="font-semibold text-orange-800">File Laporan</h3>
+          </div>
+          <p class="text-sm text-700 mb-6">
+            Nama File:
+            <span class="font-medium">{{ selected.namaFile }}</span>
+          </p>
+          <div class="flex gap-3">
+            <a
+              :href="selected.linkFile"
+              target="_blank"
+              class="px-4 py-2 text-sm rounded-lg border border-orange-300 text-orange-700 hover:bg-orange-100 transition"
+            >
+              Preview File
+            </a>
+            <a
+              :href="selected.linkFile"
+              download
+              class="px-4 py-2 text-sm rounded-lg bg-orange-600 text-white hover:bg-orange-700 transition"
+            >
+              Download File
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
   </div>
 </template>
 

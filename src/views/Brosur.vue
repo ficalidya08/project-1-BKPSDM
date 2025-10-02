@@ -176,7 +176,7 @@
     <!-- Modal Detail -->
 <div
   v-if="showModal"
-  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-poppins"
 >
   <div
     class="bg-white w-full max-w-5xl rounded-2xl shadow-xl p-8 relative 

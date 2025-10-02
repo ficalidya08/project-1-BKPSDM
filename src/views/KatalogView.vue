@@ -132,7 +132,7 @@
     <!-- Modal Detail -->
 <div
   v-if="showModal"
-  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-poppins"
 >
   <div
   class="bg-white w-full max-w-5xl rounded-3xl shadow-2xl p-8 relative max-h-[90vh]"
@@ -140,10 +140,11 @@
     <!-- Tombol Close -->
   <button
     @click="showModal = false"
-    class="sticky top-1 float-right text-gray-400 hover:text-gray-700 text-xl z-10"
+    class="absolute top-4 right-4 text-400 hover:text-700 text-xl z-10"
   >
     ✕
   </button>
+  
     <div class="overflow-y-auto max-h-[80vh] pr-2">
     <!-- Judul -->
     <h2 class="text-2xl font-bold mb-6 text-gray-800 break-words">
@@ -443,8 +444,10 @@ function openDetail(item) {
 }
 </script>
 
+
 <style>
 :root {
   font-family: "Poppins", sans-serif;
 }
 </style>
+

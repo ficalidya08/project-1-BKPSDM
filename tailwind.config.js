@@ -6,8 +6,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Sen'],
+        sans: ['Sen', 'sans-serif'],
         katalog: ['"Cinzel Decorative"', 'serif'],
+        poppins: ['Poppins', 'sans-serif'], // ✅ tambahin ini
       },
       fontSize: {
         xs: '10px',
