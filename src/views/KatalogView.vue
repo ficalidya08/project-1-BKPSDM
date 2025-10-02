@@ -135,102 +135,107 @@
   class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-poppins"
 >
   <div
-  class="bg-white w-full max-w-5xl rounded-3xl shadow-2xl p-8 relative max-h-[90vh]"
->
-    <!-- Tombol Close -->
-  <button
-    @click="showModal = false"
-    class="absolute top-4 right-4 text-400 hover:text-700 text-xl z-10"
+    class="bg-white w-full max-w-5xl rounded-3xl shadow-2xl p-8 relative max-h-[90vh]"
   >
-    ✕
-  </button>
-  
-    <div class="overflow-y-auto max-h-[80vh] pr-2">
-    <!-- Judul -->
-    <h2 class="text-2xl font-bold mb-6 text-gray-800 break-words">
-      {{ selected.nama }}
-    </h2>
+    <!-- Tombol Close -->
+    <button
+      @click="showModal = false"
+      class="absolute top-4 right-4 text-400 hover:text-700 text-xl z-10"
+    >
+      ✕
+    </button>
 
-    <!-- Grid Detail -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Konten scrollable -->
+    <div class="overflow-y-auto pr-2 max-h-[80vh]">
 
-        <div class="bg-red-50 p-5 rounded-xl border border-red-200">
-        <div class="flex items-center gap-2 mb-2">
-        <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
-        <h3 class="font-semibold text-red-800">Pengertian</h3>
-        </div>
-        <p>{{ selected.pengertianDetail }}</p>
-        </div>
+        <!-- Judul -->
+        <h2 class="text-2xl font-bold mb-6">Pelatihan Kepemimpinan Dasar</h2>
 
-      <!-- Tujuan Pelatihan -->
-      <div class="bg-orange-50 p-5 rounded-xl border border-orange-200">
-        <div class="flex items-center gap-2 mb-2">
-        <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
-        <h3 class="font-semibold text-orange-800">Tujuan Pelatihan</h3>
-        </div>
-        <p>{{ selected.tujuanDetail }}</p>
-      </div>
-
-      <!-- Jadwal dan Tempat -->
-      <div class="bg-indigo-50 p-5 rounded-xl border border-indigo-200">
-        <h3 class="font-semibold text-indigo-800">Jadwal dan Tempat</h3>
-        <div class="flex items-center gap-2 mb-2">
-        <img src="@/assets/icons/Kalender.svg" alt="Kalender" class="h-6 w-6" />
-        <p>{{ selected.jadwal }}</p>
-        <img src="@/assets/icons/Map_ungu.svg" alt="Map" class="h-6 w-6" />
-        <p>{{ selected.tempat }}</p>
-        </div>
-      </div>
-
-      <!-- Penyelenggara -->
-      <div class="bg-purple-50 p-5 rounded-xl border border-purple-200">
-        <div class="flex items-center gap-2 mb-2">
-        <img src="@/assets/icons/Users.svg" alt="Users" class="h-6 w-6" />
-        <h3 class="font-semibold text-purple-800">Penyelenggara</h3>
-        </div>
-        <p>{{ selected.penyelenggara }}</p>
-      </div>
-
-      <!-- Narasumber -->
-      <div class="bg-pink-50 p-5 rounded-xl border border-pink-200">
-        <div class="flex items-center gap-2 mb-2">
-        <img src="@/assets/icons/User_ungu.svg" alt="User" class="h-6 w-6" />
-        <h3 class="font-semibold text-purple-800">Narasumber</h3>
-        </div>
-        <p>{{ selected.narasumber }}</p>
-      </div>
-
-      <!-- Manfaat -->
-      <div class="bg-blue-50 p-5 rounded-xl border border-blue-200">
-        <div class="flex items-center gap-2 mb-2">
-        <img src="@/assets/icons/File text.svg" alt="File" class="h-6 w-6" />
-        <h3 class="font-semibold text-blue-800">Manfaat</h3>
-        </div>
-        <p>{{ selected.manfaat }}</p>
-      </div>
-
-      <!-- Isi Materi -->
-      <div class="bg-green-50 p-5 rounded-xl border border-green-200">
-        <div class="flex items-center gap-2 mb-2">
-        <img src="@/assets/icons/Calendar.svg" alt="Calendar" class="h-6 w-6" />
-        <h3 class="font-semibold text-green-800">Isi Materi Pelatihan</h3>
-        </div>
-        <p>{{ selected.materi }}</p>
-      </div>
-
-      <!-- Output -->
-      <div class="bg-yellow-50 p-5 rounded-xl border border-yellow-200">
-        <div class="flex items-center gap-2 mb-2">
-        <img src="@/assets/icons/Info.svg" alt="Info" class="h-6 w-6" />
-        <h3 class="font-semibold text-yellow-800">Output Pelatihan</h3>
-        </div>
-        <p>{{ selected.output }}</p>
-      </div>
+        <!-- Grid Konten -->
+<div class="grid grid-cols-2 gap-4 text-sm">
+  <!-- Jadwal & Tempat -->
+  <div class="p-4 border rounded-xl bg-purple-50">
+    <div class="flex items-center gap-2 mb-1">
+      <img src="@/assets/icons/Kalender.svg" alt="Kalender" class="h-6 w-6" />
+      <h3 class="font-semibold text-purple-700">Jadwal</h3>
     </div>
+    <p>{{ selected.jadwal }}</p>
+    <div class="flex items-center gap-2 mb-1">
+      <img src="@/assets/icons/Map_ungu.svg" alt="Map" class="h-6 w-6" />
+      <h3 class="font-semibold text-purple-700">Tempat</h3>
+      
+    </div>
+    <p>{{ selected.tempat }}</p>
   </div>
+
+  <!-- Penyelenggara -->
+<div class="p-4 border rounded-xl bg-pink-50">
+  <div class="flex flex-wrap items-center gap-2 mb-1">
+    <img src="@/assets/icons/Users-pink.svg" alt="Users" class="h-6 w-6" />
+    <h3 class="font-semibold text-pink-700 text-sm sm:text-base">
+      Penyelenggara
+    </h3>
   </div>
+  <p class="text-sm sm:text-base">{{ selected.penyelenggara }}</p>
 </div>
 
+  <!-- Narasumber -->
+  <div class="p-4 border rounded-xl bg-indigo-50">
+    <div class="flex items-center gap-2 mb-1">
+      <img src="@/assets/icons/Users-blue.svg" alt="User" class="h-6 w-6" />
+      <h3 class="font-semibold text-indigo-700">Narasumber</h3>
+    </div>
+    <p>{{ selected.narasumber }}</p>
+  </div>
+
+  <!-- Isi Materi -->
+  <div class="p-4 border rounded-xl bg-green-50">
+    <div class="flex items-center gap-2 mb-1">
+      <img src="@/assets/icons/Calendar.svg" alt="Calendar" class="h-6 w-6" />
+      <h3 class="font-semibold text-green-700">Isi Materi</h3>
+    </div>
+    <p>{{ selected.materi }}</p>
+  </div>
+
+  <!-- Pengertian (full width) -->
+  <div class="p-4 border rounded-xl bg-yellow-50 col-span-2">
+    <div class="flex items-center gap-2 mb-1">
+      <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
+      <h3 class="font-semibold text-yellow-700">Pengertian</h3>
+    </div>
+    <p>{{ selected.pengertianDetail }}</p>
+  </div>
+
+  <!-- Tujuan Pelatihan -->
+  <div class="p-4 border rounded-xl bg-orange-50 col-span-2">
+    <div class="flex items-center gap-2 mb-1">
+      <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
+      <h3 class="font-semibold text-orange-700">Tujuan Pelatihan</h3>
+    </div>
+    <p>{{ selected.tujuanDetail }}</p>
+  </div>
+
+  <!-- Manfaat -->
+  <div class="p-4 border rounded-xl bg-blue-50 col-span-2">
+    <div class="flex items-center gap-2 mb-1">
+      <img src="@/assets/icons/File text.svg" alt="File" class="h-6 w-6" />
+      <h3 class="font-semibold text-blue-700">Manfaat</h3>
+    </div>
+    <p>{{ selected.manfaat }}</p>
+  </div>
+
+  <!-- Output Pelatihan (full width) -->
+  <div class="p-4 border rounded-xl bg-gray-50 col-span-2">
+    <div class="flex items-center gap-2 mb-1">
+      <img src="@/assets/icons/Info.svg" alt="Info" class="h-6 w-6" />
+      <h3 class="font-semibold text-gray-700">Output Pelatihan</h3>
+    </div>
+    <p>{{ selected.output }}</p>
+  </div>
+</div>
+</div>
+</div>
+</div>
 
   </div>
 </template>

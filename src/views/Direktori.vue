@@ -78,7 +78,7 @@
               <td class="px-4 py-3">
                 {{ (currentPage - 1) * itemsPerPage + index + 1 }}
               </td>
-              <td class="px-4 py-3 text-800 font-medium">{{ item.judul }}</td>
+             <td class="px-4 py-3 font-semibold text-blue-600">{{ item.judul }}</td>
               <td class="px-4 py-3">
                 <img :src="item.foto" alt="foto penulis" class="h-12 w-12 object-cover rounded-full"/>
               </td>
@@ -179,7 +179,7 @@
             <img
               src="@/assets/icons/Users.svg"
               alt="Icon"
-              class="h-5 w-5 text-purple-800"
+              class="h-5 w-5 text-purple-00"
             />
             <h3 class="font-semibold text-purple-600 leading-none">
               Biodata Penulis
@@ -187,22 +187,23 @@
           </div>
 
           <!-- Isi Biodata -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 text-sm">
-            <p>
-              <span class="font-semibold text-900">Nama Penulis:</span>
-              <span class="ml-1 text-700">{{ selected.namaPenulis }}</span>
-            </p>
-            <p>
-              <span class="font-semibold text-900"
-                >Organisasi Perangkat Daerah (OPD):</span
-              >
-              <span class="ml-1 text-700">{{ selected.organisasi }}</span>
-            </p>
-            <p class="col-span-2">
-              <span class="font-semibold text-900">Jabatan:</span>
-              <span class="ml-1 text-700">{{ selected.jabatan }}</span>
-            </p>
-          </div>
+          <div class="grid grid-cols-1 gap-4 text-sm">
+  <div>
+    <p class="font-semibold text-gray-900">Nama Penulis:</p>
+    <p class="text-gray-700 break-words whitespace-normal">{{ selected.namaPenulis }}</p>
+  </div>
+
+  <div>
+    <p class="font-semibold text-gray-900">Organisasi Perangkat Daerah (OPD):</p>
+    <p class="text-gray-700 break-words whitespace-normal">{{ selected.organisasi }}</p>
+  </div>
+
+  <div>
+    <p class="font-semibold text-gray-900">Jabatan:</p>
+    <p class="text-gray-700 break-words whitespace-normal">{{ selected.jabatan }}</p>
+  </div>
+</div>
+
         </div>
       </div>
 
