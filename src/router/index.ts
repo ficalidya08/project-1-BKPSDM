@@ -4,8 +4,6 @@ import Brosur from '@/views/Brosur.vue'
 import Direktori from '@/views/Direktori.vue'
 
 
-
-
 const router = createRouter({
   history: createWebHistory(),
 

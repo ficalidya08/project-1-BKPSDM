@@ -1,9 +1,8 @@
 <template>
   <div
-  class="min-h-screen bg-cover bg-center flex flex-col items-center px-6 py-10"
-  style="background-image: url('/src/assets/images/bg-white.png')"
->
-
+    class="min-h-screen bg-cover bg-center flex flex-col items-center px-6 py-10"
+    style="background-image: url('/src/assets/images/bg-white.png')"
+  >
     <!-- Tombol kembali pojok kiri atas -->
     <router-link 
       to="/" 
@@ -21,26 +20,20 @@
       </svg>
       <span class="text-base font-medium">Kembali ke Home</span>
     </router-link>
-<div>
-      <!-- Container logo -->
-<div class="flex items-center justify-center gap-2">
-  <!-- Logo BKPSDM -->
-  <img
-    src="@/assets/images/logo/bkpsdm.png"
-    alt="Logo BKPSDM"
-    class="h-[70px] w-auto"
-  />
 
-  <!-- Logo utama -->
-  <img
-    src="@/assets/images/logo/logo.png"
-    alt="Logo Utama"
-    class="h-[140px] w-auto"
-  />
-</div>
-
-</div>
-
+    <!-- Container logo -->
+    <div class="flex items-center justify-center gap-2">
+      <img
+        src="@/assets/images/logo/bkpsdm.png"
+        alt="Logo BKPSDM"
+        class="h-[70px] w-auto"
+      />
+      <img
+        src="@/assets/images/logo/logo.png"
+        alt="Logo Utama"
+        class="h-[140px] w-auto"
+      />
+    </div>
 
     <!-- Judul -->
     <div class="text-center text-black mb-8">
@@ -51,97 +44,106 @@
     </div>
 
     <!-- Kontainer Tabel -->
-    <div
-      class="bg-white shadow-xl rounded-xl w-full max-w-6xl overflow-hidden"
-    >
-     <!-- Filter Atas -->
-<div
-  class="flex flex-wrap justify-between items-center p-4 border-b border-gray-200 gap-4"
->
-  <div class="flex items-center space-x-2">
-    <label for="year" class="text-sm font-semibold text-gray-700"
-      >Tahun:</label
-    >
-    <select
-      id="year"
-      v-model="selectedYear"
-      class="border border-gray-300 rounded-lg px-2 py-1 text-sm"
-    >
-      <option value="">Semua</option>
-      <option>2017</option>
-      <option>2018</option>
-      <option>2019</option>
-      <option>2020</option>
-      <option>2021</option>
-      <option>2022</option>
-      <option>2023</option>
-      <option>2024</option>
-      <option>2025</option>
-    </select>
-  </div>
-  <input
-    type="text"
-    v-model="searchQuery"
-    placeholder="Search..."
-    class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-60"
-  />
-</div>
+    <div class="bg-white shadow-xl rounded-xl w-full max-w-6xl overflow-hidden">
+      <!-- Filter -->
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-3 p-4 border-b border-gray-200">
+        <!-- Kiri: Dropdown Tahun -->
+        <div class="flex items-center space-x-2">
+          <label for="year" class="text-sm font-semibold text-gray-700">Tahun:</label>
+          <select
+            id="year"
+            v-model="selectedYear"
+            class="border border-gray-300 rounded-lg px-2 py-1 text-sm"
+          >
+            <option value="">Semua</option>
+            <option>2017</option>
+            <option>2018</option>
+            <option>2019</option>
+            <option>2020</option>
+            <option>2021</option>
+            <option>2022</option>
+            <option>2023</option>
+            <option>2024</option>
+            <option>2025</option>
+          </select>
+        </div>
+
+        <!-- Kanan: Filter Kolom + Search -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
+          <!-- Dropdown Filter -->
+          <select
+            v-model="selectedFilter"
+            class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-full sm:w-auto"
+          >
+            <option value="">Semua Kolom</option>
+            <option value="nama">Nama Brosur</option>
+            <option value="penyelenggara">Nama Penyelenggara</option>
+            <option value="nomor">Nomor Surat</option>
+          </select>
+
+          <!-- Input Search -->
+          <input
+            type="text"
+            v-model="searchQuery"
+            placeholder="Search..."
+            class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-full sm:w-60"
+          />
+        </div>
+      </div>
 
       <!-- Tabel -->
-<div class="overflow-x-auto">
-  <table class="min-w-full text-sm text-left">
-    <thead class="bg-gray-100 text-gray-700 text-xs uppercase">
-      <tr>
-        <th class="px-4 py-3">No</th>
-        <th class="px-4 py-3">Nama Brosur</th>
-        <th class="px-4 py-3">Nama Penyelenggara</th>
-        <th class="px-4 py-3">Nomor Surat</th>
-        <th class="px-4 py-3">Tanggal Surat</th>
-        <th class="px-4 py-3">File Surat</th>
-        <th class="px-4 py-3">Detail</th>
-      </tr>
-    </thead>
-    <tbody>
-  <tr
-    v-for="(item, index) in paginatedData"
-    :key="index"
-    class="border-b"
-  >
-    <td class="px-4 py-3">
-      {{ (currentPage - 1) * itemsPerPage + index + 1 }}
-    </td>
-    <td class="px-4 py-3 font-semibold text-blue-600">
-      {{ item.nama }}
-    </td>
-    <td class="px-4 py-3">{{ item.penyelenggara }}</td>
-    <td class="px-4 py-3">{{ item.nomor }}</td>
-    <td class="px-4 py-3">{{ item.tanggal }}</td>
-    <td class="px-4 py-3 text-blue-600 underline cursor-pointer">
-      <a :href="item.file" target="_blank">Lihat File</a>
-    </td>
-    <td class="px-4 py-2 border">
-      <button
-        class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
-        @click="openDetail(item)"
-      >
-        Detail
-      </button>
-    </td>
-  </tr>
-</tbody>
-  </table>
-</div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm text-left">
+          <thead class="bg-gray-100 text-gray-700 text-xs uppercase">
+            <tr>
+              <th class="px-4 py-3">No</th>
+              <th class="px-4 py-3">Nama Brosur</th>
+              <th class="px-4 py-3">Nama Penyelenggara</th>
+              <th class="px-4 py-3">Nomor Surat</th>
+              <th class="px-4 py-3">Tanggal Surat</th>
+              <th class="px-4 py-3">File Surat</th>
+              <th class="px-4 py-3">Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(item, index) in paginatedData"
+              :key="index"
+              class="border-b"
+            >
+              <td class="px-4 py-3">
+                {{ (currentPage - 1) * itemsPerPage + index + 1 }}
+              </td>
+              <td class="px-4 py-3 font-semibold text-blue-600">
+                {{ item.nama }}
+              </td>
+              <td class="px-4 py-3">{{ item.penyelenggara }}</td>
+              <td class="px-4 py-3">{{ item.nomor }}</td>
+              <td class="px-4 py-3">{{ item.tanggal }}</td>
+              <td class="px-4 py-3 text-blue-600 underline cursor-pointer">
+                <a :href="item.file" target="_blank">Lihat File</a>
+              </td>
+              <td class="px-4 py-2 border">
+                <button
+                  class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+                  @click="openDetail(item)"
+                >
+                  Detail
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <!-- Footer Pagination -->
-      <div
-        class="flex justify-between items-center px-4 py-3 border-t text-sm text-gray-600"
-      >
+      <div class="flex flex-col md:flex-row justify-between items-center px-4 py-3 border-t text-sm text-gray-600 gap-2">
         <span>
-        Showing 
-        {{ (currentPage - 1) * itemsPerPage + 1 }} 
-        to 
-        {{ Math.min(currentPage * itemsPerPage, filteredData.length) }} 
-        of {{ filteredData.length }} entries
+          Showing 
+          {{ (currentPage - 1) * itemsPerPage + 1 }} 
+          to 
+          {{ Math.min(currentPage * itemsPerPage, filteredData.length) }} 
+          of {{ filteredData.length }} entries
         </span>
 
         <div class="flex space-x-2">
@@ -173,98 +175,93 @@
         </div>
       </div>
 
-    <!-- Modal Detail -->
-<div
-  v-if="showModal"
-  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-poppins"
->
-  <div
-    class="bg-white w-full max-w-5xl rounded-2xl shadow-xl p-8 relative 
-           max-h-[90vh] overflow-y-auto"
-  >
-     <!-- Tombol Close -->
-  <button
-    @click="showModal = false"
-    class="sticky top-1 float-right text-gray-400 hover:text-gray-700 text-xl z-10"
-  >
-    ✕
-  </button>
-
-
-    <!-- Judul -->
-    <h2 class="text-2xl font-bold mb-8 text-gray-900">
-      Brosur Pelatihan Kepemimpinan Strategis 2025
-    </h2>
-
-    <!-- Grid Card Detail -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Informasi Penyelenggara -->
-      <div class="bg-blue-50 border border-blue-200 p-6 rounded-xl">
-        <div class="flex items-center gap-2 mb-3">
-          <img src="@/assets/icons/Book.svg" alt="Penyelenggara" class="h-6 w-6" />
-          <h3 class="font-semibold text-blue-800">Informasi Penyelenggara</h3>
-        </div>
-        <p class="font-medium">{{ selected.penyelenggara }}</p>
-        <p class="text-sm text-gray-700 flex items-center gap-1 mt-1">
-          <img src="@/assets/icons/Map.svg" class="h-4 w-4" alt="alamat" />
-          Jl. Veteran No. 10, Jakarta Pusat
-        </p>
-      </div>
-
-      <!-- Informasi Kontak -->
-      <div class="bg-purple-50 border border-purple-200 p-6 rounded-xl">
-        <div class="flex items-center gap-2 mb-3">
-          <img src="@/assets/icons/Users.svg" alt="Kontak" class="h-6 w-6" />
-          <h3 class="font-semibold text-purple-800">Informasi Kontak</h3>
-        </div>
-        <p class="font-medium">Ahmad Rizki Pratama</p>
-        <p class="text-sm text-gray-700">0812-3456-7890</p>
-      </div>
-
-      <!-- Informasi Dokumen -->
-      <div class="bg-green-50 border border-green-200 p-6 rounded-xl">
-        <div class="flex items-center gap-2 mb-3">
-          <img src="@/assets/icons/Calendar.svg" alt="Dokumen" class="h-6 w-6" />
-          <h3 class="font-semibold text-green-800">Informasi Dokumen</h3>
-        </div>
-        <p class="text-sm">
-          <b>No. Surat:</b> {{ selected.nomor }}
-        </p>
-        <p class="text-sm">
-          <b>Tanggal Surat:</b> {{ selected.tanggal }}
-        </p>
-      </div>
-
-      <!-- File Brosur -->
-      <div class="bg-orange-50 border border-orange-200 p-6 rounded-xl">
-        <div class="flex items-center gap-2 mb-3">
-          <img src="@/assets/icons/Buku.svg" alt="File" class="h-6 w-6" />
-          <h3 class="font-semibold text-orange-800">File Brosur</h3>
-        </div>
-        <p class="text-sm mb-3 break-words whitespace-normal">{{ selected.file.split('/').pop() }}</p>
-        <div class="flex gap-3">
-          <a
-            :href="selected.file"
-            target="_blank"
-            class="px-4 py-2 text-sm rounded-lg border border-orange-300 text-orange-700 hover:bg-orange-100 transition"
+      <!-- Modal Detail -->
+      <div
+        v-if="showModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-poppins"
+      >
+        <div
+          class="bg-white w-full max-w-5xl rounded-2xl shadow-xl p-8 relative 
+                 max-h-[90vh] overflow-y-auto"
+        >
+          <!-- Tombol Close -->
+          <button
+            @click="showModal = false"
+            class="sticky top-1 float-right text-gray-400 hover:text-gray-700 text-xl z-10"
           >
-            Preview File
-          </a>
-          <a
-            :href="selected.file"
-            download
-            class="px-4 py-2 text-sm rounded-lg bg-orange-600 text-white hover:bg-orange-700 transition"
-          >
-            Download File
-          </a>
+            ✕
+          </button>
+
+          <!-- Judul -->
+          <h2 class="text-2xl font-bold mb-8 text-gray-900">
+            Brosur Pelatihan Kepemimpinan Strategis 2025
+          </h2>
+
+          <!-- Grid Card Detail -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Informasi Penyelenggara -->
+            <div class="bg-blue-50 border border-blue-200 p-6 rounded-xl">
+              <div class="flex items-center gap-2 mb-3">
+                <img src="@/assets/icons/Book.svg" alt="Penyelenggara" class="h-6 w-6" />
+                <h3 class="font-semibold text-blue-800">Informasi Penyelenggara</h3>
+              </div>
+              <p class="font-medium">{{ selected.penyelenggara }}</p>
+              <p class="text-sm text-gray-700 flex items-center gap-1 mt-1">
+                <img src="@/assets/icons/Map.svg" class="h-4 w-4" alt="alamat" />
+                Jl. Veteran No. 10, Jakarta Pusat
+              </p>
+            </div>
+
+            <!-- Informasi Kontak -->
+            <div class="bg-purple-50 border border-purple-200 p-6 rounded-xl">
+              <div class="flex items-center gap-2 mb-3">
+                <img src="@/assets/icons/Users.svg" alt="Kontak" class="h-6 w-6" />
+                <h3 class="font-semibold text-purple-800">Informasi Kontak</h3>
+              </div>
+              <p class="font-medium">Ahmad Rizki Pratama</p>
+              <p class="text-sm text-gray-700">0812-3456-7890</p>
+            </div>
+
+            <!-- Informasi Dokumen -->
+            <div class="bg-green-50 border border-green-200 p-6 rounded-xl">
+              <div class="flex items-center gap-2 mb-3">
+                <img src="@/assets/icons/Calendar.svg" alt="Dokumen" class="h-6 w-6" />
+                <h3 class="font-semibold text-green-800">Informasi Dokumen</h3>
+              </div>
+              <p class="text-sm"><b>No. Surat:</b> {{ selected.nomor }}</p>
+              <p class="text-sm"><b>Tanggal Surat:</b> {{ selected.tanggal }}</p>
+            </div>
+
+            <!-- File Brosur -->
+            <div class="bg-orange-50 border border-orange-200 p-6 rounded-xl">
+              <div class="flex items-center gap-2 mb-3">
+                <img src="@/assets/icons/Buku.svg" alt="File" class="h-6 w-6" />
+                <h3 class="font-semibold text-orange-800">File Brosur</h3>
+              </div>
+              <p class="text-sm mb-3 break-words whitespace-normal">{{ selected.file.split('/').pop() }}</p>
+              <div class="flex gap-3">
+                <a
+                  :href="selected.file"
+                  target="_blank"
+                  class="px-4 py-2 text-sm rounded-lg border border-orange-300 text-orange-700 hover:bg-orange-100 transition"
+                >
+                  Preview File
+                </a>
+                <a
+                  :href="selected.file"
+                  download
+                  class="px-4 py-2 text-sm rounded-lg bg-orange-600 text-white hover:bg-orange-700 transition"
+                >
+                  Download File
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
-</div>
-</Template>
+</template>
 
 <script setup>
 import { ref, computed } from "vue";
@@ -277,12 +274,12 @@ function openDetail(item) {
   showModal.value = true;
 }
 
-// Data asli
+// Data
 const pelatihan = [
   {
     nama: "Pelatihan Kepemimpinan Strategis 2024",
     penyelenggara: "LAN (Lembaga Administrasi Negara)",
-    nomor: "002/LAN/2024",
+    nomor: "001/LAN/2024",
     tanggal: "15 Januari 2024",
     file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
   },
@@ -296,21 +293,21 @@ const pelatihan = [
   {
     nama: "Brosur Sertifikasi ISO 9001:2015",
     penyelenggara: "Consultant Group Indonesia",
-    nomor: "002/LAN/2024",
+    nomor: "001/LAN/2024",
     tanggal: "25 Januari 2024",
     file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
   },
   {
     nama: "Brosur Pelatihan Manajemen Keuangan Publik",
     penyelenggara: "BKN (Badan Kepegawaian Negara)",
-    nomor: "002/LAN/2024",
+    nomor: "001/LAN/2024",
     tanggal: "25 Januari 2024",
     file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
   },
   {
     nama: "Brosur Workshop Data Analytics",
     penyelenggara: "Institut Teknologi Bandung",
-    nomor: "002/LAN/2024",
+    nomor: "003/LAN/2024",
     tanggal: "25 Januari 2024",
     file: "/files/brosur_kepemimpinan_strategis_2024.pdf",
   },
@@ -370,45 +367,79 @@ const pelatihan = [
     tanggal: "25 Januari 2025",
     file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
   },
-
+  {
+    nama: "Brosur Sertifikasi ISO 9001:2015",
+    penyelenggara: "Consultant Group Indonesia",
+    nomor: "002/LAN/2025",
+    tanggal: "25 Januari 2025",
+    file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
+  },
+  {
+    nama: "Brosur Sertifikasi ISO 9001:2015",
+    penyelenggara: "Consultant Group Indonesia",
+    nomor: "002/LAN/2025",
+    tanggal: "25 Januari 2025",
+    file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
+  },
+  {
+    nama: "Brosur Sertifikasi ISO 9001:2015",
+    penyelenggara: "Consultant Group Indonesia",
+    nomor: "002/LAN/2025",
+    tanggal: "25 Januari 2025",
+    file: "/files/brosur_kepemimpinan_strategis_2025.pdf",
+  },
 ];
 
-// State untuk filter 
+// State untuk filter
 const selectedYear = ref("2025");
 const searchQuery = ref("");
+const selectedFilter = ref(""); // filter kolom
 
 // Pagination
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
 
+// Filtered Data
 const filteredData = computed(() => {
   return pelatihan.filter((item) => {
-    // Ambil tahun dari tanggal surat (cari angka 4 digit)
+    // Ambil tahun dari tanggal
     const yearFromTanggal = item.tanggal.match(/\d{4}/);
     const tahunItem = yearFromTanggal ? parseInt(yearFromTanggal[0]) : null;
 
     const matchYear =
       selectedYear.value === "" || tahunItem === parseInt(selectedYear.value);
 
+    // Tentukan field berdasarkan filter kolom
+    let field = "";
+    if (selectedFilter.value === "nama") {
+      field = item.nama;
+    } else if (selectedFilter.value === "penyelenggara") {
+      field = item.penyelenggara;
+    } else if (selectedFilter.value === "nomor") {
+      field = item.nomor;
+    } else {
+      field = Object.values(item).join(" ");
+    }
+
+    // Filter search
     const matchSearch =
       searchQuery.value === "" ||
-      Object.values(item).some((val) =>
-        String(val).toLowerCase().includes(searchQuery.value.toLowerCase())
-      );
+      String(field).toLowerCase().includes(searchQuery.value.toLowerCase());
 
     return matchYear && matchSearch;
   });
 });
 
+// Total pages
 const totalPages = computed(() => {
   return Math.ceil(filteredData.value.length / itemsPerPage.value);
 });
 
+// Pagination data
 const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage.value;
   return filteredData.value.slice(start, start + itemsPerPage.value);
 });
-
 </script>
 
 <style>

@@ -38,15 +38,28 @@
     <!-- Kontainer Tabel -->
     <div class="bg-white shadow-xl rounded-xl w-full max-w-6xl overflow-hidden font-inter">
       
-      <!-- Filter Atas (Search) -->
-      <div class="flex justify-end p-4 border-b border-gray-200">
-        <input
-          type="text"
-          v-model="searchQuery"
-          placeholder="Search..."
-          class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-60"
-        />
-      </div>
+      <!-- Filter + Search -->
+<div class="flex flex-col sm:flex-row sm:justify-end items-center gap-2 p-4 border-b border-gray-200">
+  <!-- Dropdown Filter (kiri, nempel) -->
+  <select
+    v-model="selectedFilter"
+    class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-full sm:w-auto"
+  >
+    <option value="">Semua Kolom</option>
+    <option value="namaPelatihan">Nama Pelatihan</option>
+    <option value="pengertian">Pengertian</option>
+    <option value="tujuan">Tujuan</option>
+    <option value="penyelenggara">Penyelenggara</option>
+  </select>
+
+  <!-- Input Search (kanan, nempel) -->
+  <input
+    type="text"
+    v-model="searchQuery"
+    placeholder="Search..."
+    class="border border-gray-300 rounded-lg px-3 py-1 text-sm w-full sm:w-60"
+  />
+</div>
 
       <!-- Tabel -->
       <div class="overflow-x-auto">
@@ -90,7 +103,7 @@
       </div>
 
       <!-- Footer Pagination -->
-      <div class="flex justify-between items-center px-4 py-3 border-t text-sm text-gray-600">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-3 px-4 py-3 border-t text-sm text-gray-600">
         <span>
           Showing 
           {{ (currentPage - 1) * itemsPerPage + 1 }} 
@@ -130,112 +143,111 @@
     </div>
 
     <!-- Modal Detail -->
-<div
-  v-if="showModal"
-  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-poppins"
->
-  <div
-    class="bg-white w-full max-w-5xl rounded-3xl shadow-2xl p-8 relative max-h-[90vh]"
-  >
-    <!-- Tombol Close -->
-    <button
-      @click="showModal = false"
-      class="absolute top-4 right-4 text-400 hover:text-700 text-xl z-10"
+    <div
+      v-if="showModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-poppins px-4"
     >
-      ✕
-    </button>
+      <div
+        class="bg-white w-full max-w-5xl rounded-3xl shadow-2xl p-8 relative max-h-[90vh] overflow-y-auto"
+      >
+        <!-- Tombol Close -->
+        <button
+          @click="showModal = false"
+          class="absolute top-4 right-4 text-400 hover:text-700 text-xl z-10"
+        >
+          ✕
+        </button>
 
-    <!-- Konten scrollable -->
-    <div class="overflow-y-auto pr-2 max-h-[80vh]">
+        <!-- Konten scrollable -->
+        <div class="overflow-y-auto pr-2 max-h-[80vh]">
 
-        <!-- Judul -->
-        <h2 class="text-2xl font-bold mb-6">Pelatihan Kepemimpinan Dasar</h2>
+          <!-- Judul -->
+          <h2 class="text-2xl font-bold mb-6">{{ selected.nama }}</h2>
 
-        <!-- Grid Konten -->
-<div class="grid grid-cols-2 gap-4 text-sm">
-  <!-- Jadwal & Tempat -->
-  <div class="p-4 border rounded-xl bg-purple-50">
-    <div class="flex items-center gap-2 mb-1">
-      <img src="@/assets/icons/Kalender.svg" alt="Kalender" class="h-6 w-6" />
-      <h3 class="font-semibold text-purple-700 text-sm sm:text-base">Jadwal</h3>
+          <!-- Grid Konten -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <!-- Jadwal & Tempat -->
+            <div class="p-4 border rounded-xl bg-purple-50">
+              <div class="flex items-center gap-2 mb-1">
+                <img src="@/assets/icons/Kalender.svg" alt="Kalender" class="h-6 w-6" />
+                <h3 class="font-semibold text-purple-700 text-sm sm:text-base">Jadwal</h3>
+              </div>
+              <p>{{ selected.jadwal }}</p>
+              <div class="flex items-center gap-2 mb-1 mt-2">
+                <img src="@/assets/icons/Map_ungu.svg" alt="Map" class="h-6 w-6" />
+                <h3 class="font-semibold text-purple-700 text-sm sm:text-base">Tempat</h3>
+              </div>
+              <p>{{ selected.tempat }}</p>
+            </div>
+
+            <!-- Penyelenggara -->
+            <div class="p-4 border rounded-xl bg-pink-50">
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <img src="@/assets/icons/Users-pink.svg" alt="Users" class="h-6 w-6" />
+                <h3 class="font-semibold text-pink-700 text-sm sm:text-base">
+                  Penyelenggara
+                </h3>
+              </div>
+              <p>{{ selected.penyelenggara }}</p>
+            </div>
+
+            <!-- Narasumber -->
+            <div class="p-4 border rounded-xl bg-indigo-50">
+              <div class="flex items-center gap-2 mb-1">
+                <img src="@/assets/icons/Users-blue.svg" alt="User" class="h-6 w-6" />
+                <h3 class="font-semibold text-indigo-700 text-sm sm:text-base">Narasumber</h3>
+              </div>
+              <p>{{ selected.narasumber }}</p>
+            </div>
+
+            <!-- Isi Materi -->
+            <div class="p-4 border rounded-xl bg-green-50">
+              <div class="flex items-center gap-2 mb-1">
+                <img src="@/assets/icons/Calendar.svg" alt="Calendar" class="h-6 w-6" />
+                <h3 class="font-semibold text-green-700 text-sm sm:text-base">Isi Materi</h3>
+              </div>
+              <p>{{ selected.materi }}</p>
+            </div>
+
+            <!-- Pengertian (full width) -->
+            <div class="p-4 border rounded-xl bg-yellow-50 sm:col-span-2">
+              <div class="flex items-center gap-2 mb-1">
+                <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
+                <h3 class="font-semibold text-yellow-700 text-sm sm:text-base">Pengertian</h3>
+              </div>
+              <p>{{ selected.pengertianDetail }}</p>
+            </div>
+
+            <!-- Tujuan -->
+            <div class="p-4 border rounded-xl bg-orange-50 sm:col-span-2">
+              <div class="flex items-center gap-2 mb-1">
+                <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
+                <h3 class="font-semibold text-orange-700 text-sm sm:text-base">Tujuan Pelatihan</h3>
+              </div>
+              <p>{{ selected.tujuanDetail }}</p>
+            </div>
+
+            <!-- Manfaat -->
+            <div class="p-4 border rounded-xl bg-blue-50 sm:col-span-2">
+              <div class="flex items-center gap-2 mb-1">
+                <img src="@/assets/icons/File text.svg" alt="File" class="h-6 w-6" />
+                <h3 class="font-semibold text-blue-700 text-sm sm:text-base">Manfaat</h3>
+              </div>
+              <p>{{ selected.manfaat }}</p>
+            </div>
+
+            <!-- Output -->
+            <div class="p-4 border rounded-xl bg-gray-50 sm:col-span-2">
+              <div class="flex items-center gap-2 mb-1">
+                <img src="@/assets/icons/Info.svg" alt="Info" class="h-6 w-6" />
+                <h3 class="font-semibold text-gray-700 text-sm sm:text-base">Output Pelatihan</h3>
+              </div>
+              <p>{{ selected.output }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <p>{{ selected.jadwal }}</p>
-    <div class="flex items-center gap-2 mb-1">
-      <img src="@/assets/icons/Map_ungu.svg" alt="Map" class="h-6 w-6" />
-      <h3 class="font-semibold text-purple-700 text-sm sm:text-base">Tempat</h3>
-      
-    </div>
-    <p>{{ selected.tempat }}</p>
-  </div>
-
-  <!-- Penyelenggara -->
-<div class="p-4 border rounded-xl bg-pink-50">
-  <div class="flex flex-wrap items-center gap-2 mb-1">
-    <img src="@/assets/icons/Users-pink.svg" alt="Users" class="h-6 w-6" />
-    <h3 class="font-semibold text-pink-700 text-sm sm:text-base">
-      Penyelenggara
-    </h3>
-  </div>
-  <p>{{ selected.penyelenggara }}</p>
-</div>
-
-  <!-- Narasumber -->
-  <div class="p-4 border rounded-xl bg-indigo-50">
-    <div class="flex items-center gap-2 mb-1">
-      <img src="@/assets/icons/Users-blue.svg" alt="User" class="h-6 w-6" />
-      <h3 class="font-semibold text-indigo-700 text-sm sm:text-base">Narasumber</h3>
-    </div>
-    <p>{{ selected.narasumber }}</p>
-  </div>
-
-  <!-- Isi Materi -->
-  <div class="p-4 border rounded-xl bg-green-50">
-    <div class="flex items-center gap-2 mb-1">
-      <img src="@/assets/icons/Calendar.svg" alt="Calendar" class="h-6 w-6" />
-      <h3 class="font-semibold text-green-700 text-sm sm:text-base">Isi Materi</h3>
-    </div>
-    <p>{{ selected.materi }}</p>
-  </div>
-
-  <!-- Pengertian (full width) -->
-  <div class="p-4 border rounded-xl bg-yellow-50 col-span-2">
-    <div class="flex items-center gap-2 mb-1">
-      <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
-      <h3 class="font-semibold text-yellow-700 text-sm sm:text-base">Pengertian</h3>
-    </div>
-    <p>{{ selected.pengertianDetail }}</p>
-  </div>
-
-  <!-- Tujuan Pelatihan -->
-  <div class="p-4 border rounded-xl bg-orange-50 col-span-2">
-    <div class="flex items-center gap-2 mb-1">
-      <img src="@/assets/icons/Book_oren.svg" alt="Book" class="h-6 w-6" />
-      <h3 class="font-semibold text-orange-700 text-sm sm:text-base">Tujuan Pelatihan</h3>
-    </div>
-    <p>{{ selected.tujuanDetail }}</p>
-  </div>
-
-  <!-- Manfaat -->
-  <div class="p-4 border rounded-xl bg-blue-50 col-span-2">
-    <div class="flex items-center gap-2 mb-1">
-      <img src="@/assets/icons/File text.svg" alt="File" class="h-6 w-6" />
-      <h3 class="font-semibold text-blue-700 text-sm sm:text-base">Manfaat</h3>
-    </div>
-    <p>{{ selected.manfaat }}</p>
-  </div>
-
-  <!-- Output Pelatihan (full width) -->
-  <div class="p-4 border rounded-xl bg-gray-50 col-span-2">
-    <div class="flex items-center gap-2 mb-1">
-      <img src="@/assets/icons/Info.svg" alt="Info" class="h-6 w-6" />
-      <h3 class="font-semibold text-gray-700 text-sm sm:text-base">Output Pelatihan</h3>
-    </div>
-    <p>{{ selected.output }}</p>
-  </div>
-</div>
-</div>
-</div>
-</div>
 
   </div>
 </template>
@@ -246,6 +258,7 @@ import { ref, computed } from "vue";
 const showModal = ref(false);
 const selected = ref({});
 const searchQuery = ref("");
+const selectedFilter = ref("");
 
 // --- Data Dummy ---
 
@@ -401,7 +414,7 @@ const searchQuery = ref("");
     output: "Peserta mampu menguasai metodologi PMBOK dan Agile, merencanakan proyek, dan memimpin tim proyek"
   },
   {
-    id: 9,
+    id: 1,
     nama: "Pelatihan Kepemimpinan Dasar",
     pengertianRingkas:"Pelatihan untuk membangun keterampilan kepemimpinan dasar",
     tujuanRingkas:"Pelatihan untuk pengembangan kemampuan kepemimpinan dan manajemen tim",
@@ -420,11 +433,18 @@ const searchQuery = ref("");
 // --- Filtered Data ---
 const filteredData = computed(() => {
   return pelatihan.filter((item) => {
-    return (
-      searchQuery.value === "" ||
-      Object.values(item).some((val) =>
-        String(val).toLowerCase().includes(searchQuery.value.toLowerCase())
-      )
+    if (searchQuery.value === "") return true;
+    const query = searchQuery.value.toLowerCase();
+    if (selectedFilter.value) {
+      let field = "";
+      if (selectedFilter.value === "namaPelatihan") field = item.nama;
+      else if (selectedFilter.value === "pengertian") field = item.pengertianRingkas;
+      else if (selectedFilter.value === "tujuan") field = item.tujuanRingkas;
+      else if (selectedFilter.value === "penyelenggara") field = item.penyelenggara;
+      return String(field).toLowerCase().includes(query);
+    }
+    return Object.values(item).some((val) =>
+      String(val).toLowerCase().includes(query)
     );
   });
 });
@@ -432,11 +452,7 @@ const filteredData = computed(() => {
 // --- Pagination ---
 const currentPage = ref(1);
 const itemsPerPage = 10;
-
-const totalPages = computed(() => {
-  return Math.ceil(filteredData.value.length / itemsPerPage);
-});
-
+const totalPages = computed(() => Math.ceil(filteredData.value.length / itemsPerPage));
 const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   return filteredData.value.slice(start, start + itemsPerPage);
@@ -449,10 +465,8 @@ function openDetail(item) {
 }
 </script>
 
-
 <style>
 :root {
   font-family: "Poppins", sans-serif;
 }
 </style>
-
